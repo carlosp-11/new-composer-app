@@ -11,9 +11,6 @@ class Productos extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    protected $fillable= ['nombre', 'precio', 'observaciones', 'categoria'];
-    public function almacenes()
-    {
-        return $this->belongsToMany(Almacenes::class, 'productos_almacenes');
-    }
+    protected $fillable= ['nombre', 'precio', 'observaciones', 'almacen'];
+    
 }

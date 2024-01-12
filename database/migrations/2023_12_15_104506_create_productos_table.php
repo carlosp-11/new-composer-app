@@ -16,9 +16,10 @@ return new class extends Migration
             $table->string('nombre', 150);
             $table->float('precio', 8, 2);
             $table->string('observaciones', 500);
-            $table->int('id_categoria');
-            $table->foreignId('id_categoria')->constrained('categorias')->onUpdate('cascade')->onDelete('restrict');
-            $table->timestamps();
+            $table->foreignId('almacen')
+                ->references('id')
+                ->on('almacenes')
+                ->onDelete('set default');
         });
     }
 

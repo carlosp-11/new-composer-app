@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductosController;
 use App\Http\Controllers\CategoriasController;
+use App\Http\Controllers\AlmacenesController;
+use App\Http\Controllers\MainController;
 use Illuminate\Http\Request;
 
 
@@ -17,13 +19,32 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/', [ProductosController::class, 'index'])->name('home');
+Route::get('/', [MainController::class, 'index']);
 
-Route::get('/formulario', [CategoriasController::class, 'index']);
+Route::get('/lista-productos', [ProductosController::class, 'index']);
 
-Route::post('/formulario', [ProductosController::class, 'store']);
+Route::get('/nuevo-producto', [ProductosController::class, 'create']);
 
-Route::resource('formularios', App\Http\Controllers\ProductosController::class);
+Route::post('/nuevo-producto', [ProductosController::class, 'store']);
+
+Route::resource('productos', App\Http\Controllers\ProductosController::class);
+
+Route::get('/lista-categorias', [CategoriasController::class, 'index']);
+
+Route::get('/nueva-categoria', [CategoriasController::class, 'create']);
+
+Route::post('/nueva-categoria', [CategoriasController::class, 'store']);
+
+Route::resource('categorias', App\Http\Controllers\CategoriasController::class);
+
+Route::get('/lista-almacenes', [AlmacenesController::class, 'index']);
+
+Route::get('/nuevo-almacen', [AlmacenesController::class, 'create']);
+
+Route::post('/nuevo-almacen', [AlmacenesController::class, 'store']);
+
+Route::resource('almacenes', App\Http\Controllers\AlmacenesController::class);
+
 /*
 Route::post('/', function () {
     // return view('index', [ProductosController::class, 'delete']);
