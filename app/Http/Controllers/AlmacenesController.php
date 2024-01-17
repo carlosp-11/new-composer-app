@@ -10,12 +10,13 @@ class AlmacenesController extends Controller
     public function index()
     {
         $almacenes = Almacenes::all();
-        return view('gestionAlmacenes', compact('almacenes'));
+        return view('pages.almacenes.pizarra', compact('almacenes'));
     }
    
     public function create()
     {
-        return view('crearAlmacen');
+        $modo ='crear';
+        return view('pages.almacenes.formulario', compact('modo'));
     }
 
     public function store(Request $request)
@@ -31,7 +32,7 @@ class AlmacenesController extends Controller
             ]);
             $nuevoAlmacen->save();            
             DB::commit();            
-            return redirect('/lista-almacenes')->with('success', 'Almacén creado correctamente');
+            return redirect('/almacenes')->with('success', 'Almacén creado correctamente');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Error en la creación del almacén: ' . $e->getMessage());
@@ -40,13 +41,14 @@ class AlmacenesController extends Controller
 
     public function show(string $id)
     {
-        $almacen = Almacenes::findOrFail($id);
-        return view('editarAlmacen',compact('almacen'));
+       //
     }
 
     public function edit(string $id)
     {
-        //
+        $almacen = Almacenes::findOrFail($id);
+        $modo ='editar';
+        return view('pages.almacenes.formulario',compact('almacen', 'modo'));
     }
 
     public function update(Request $request, string $id)

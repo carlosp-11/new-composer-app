@@ -16,19 +16,20 @@ class ProductosController extends Controller
         $productos = Productos::all();
         $almacenes = Almacenes::all();
         $productosCategorias = Productos_has_categorias::all();
-        return view('gestionProductos', compact('productos', 'categorias', 'almacenes', 'productosCategorias')); 
+        $filtro = '';
+        return view('pages.productos.pizarra', compact('productos', 'categorias', 'almacenes', 'productosCategorias', 'filtro')); 
     }
 
     public function create()
     {
         $almacenes = Almacenes::all();
-        $categorias = Categorias::all();          
-        return view('crearProducto', compact('categorias', 'almacenes')); 
+        $categorias = Categorias::all();  
+        $modo = 'crear';
+        return view('pages.productos.formulario', compact('categorias', 'almacenes', 'modo')); 
     }
 
     public function store(Request $request)
     {
-        //dd($request);
         $this->validateData($request);
         DB::beginTransaction();
 
@@ -44,17 +45,17 @@ class ProductosController extends Controller
             
             $id = $producto->id;
             
-            $categoriasIds = $request->input('categorias');
-
+            $categoriasIds = $request->input('categorias');   
             foreach ($categoriasIds as $categoriaId) {
                 Productos_has_categorias::firstOrCreate([
                     'id_producto' => $id,
                     'id_categoria' => $categoriaId,
                 ]);
             }
-         
-            DB::commit();            
-            return redirect('/lista-productos')->with('success', 'Producto creado correctamente');
+            DB::commit(); 
+            
+            
+            return redirect('/productos')->with('success', 'Producto creado correctamente');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Error en la creación del producto: ' . $e->getMessage());
@@ -68,11 +69,43 @@ class ProductosController extends Controller
         */
     }
 
-    public function show(string $id)
+    public function show(Request $request)
+    {
+        if ($request->filtro === 'categoria'){
+            if($request->termino != 'null'){
+                $idProductos = Productos_has_categorias::where('id_categoria', $request->termino)
+                ->pluck('id_producto');
+                $productos = Productos::whereIn('id', $idProductos)->get();
+            }
+            if ($request->termino == 'null') {
+                $idProductos = Productos_has_categorias::pluck('id_producto');
+                $productos = Productos::whereNotIn('id', $idProductos)->get();
+            }
+            
+        }
+        if ($request->filtro === 'almacen'){             
+             if($request->termino != 'null'){
+                $productos = $request->filtro == 'almacen'? Productos::where('almacen', $request->termino)->get() : '' ;
+                dd('no es null');
+             }
+             if($request->termino == 'null'){
+                $productos = $request->filtro == 'almacen' ? Productos::whereNull('almacen')->get() : '';
+                //dd('es null');
+             }
+        }
+        $filtro = $request->filtro;
+        $categorias = Categorias::all(); 
+        $almacenes = Almacenes::all();
+        $productosCategorias = Productos_has_categorias::all();
+        return view('pages.productos.pizarra', compact('productos', 'categorias', 'almacenes', 'productosCategorias', 'filtro')); 
+    }
+
+    public function edit(string $id)
     {
         $producto = Productos::findOrFail($id);        
         $categorias = Categorias::all();
         $almacenes = Almacenes::all();
+        $modo = 'editar';
         $productosCategorias = Productos_has_categorias::all();
         $categoriasRelacionadas = $productosCategorias->pluck('id_categoria')->toArray();
         foreach ($categorias as $categoria) {
@@ -80,12 +113,7 @@ class ProductosController extends Controller
                 return $value->id_categoria === $categoria->id && $value->id_producto === $producto->id;
             });
         }
-        return view('editarProducto',compact('producto', 'categorias', 'almacenes', 'productosCategorias', 'categoriasRelacionadas'));
-    }
-
-    public function edit(string $id)
-    {
-        //
+        return view('pages.productos.formulario',compact('producto', 'categorias', 'almacenes', 'productosCategorias', 'categoriasRelacionadas', 'modo'));
     }
 
     public function update(Request $request, string $id)
@@ -132,10 +160,23 @@ class ProductosController extends Controller
         $request->validate([
             'nombre' => 'required|min:3|max:150',
             'precio' => 'required|numeric|min:0.01',
-            'observaciones' => 'nullable|string|max:255',
+            'observaciones' => 'required|string|max:255',
             'almacen' => 'required|integer|exists:almacenes,id',
             'categorias' => 'required|array',
         ]);
     }
- 
+    
+    public function filterOptions(Request $request)
+    {
+        
+        $filtro = $request->query('filtro');       
+        $categorias = Categorias::all();            
+        $productos = Productos::all();
+        $almacenes = Almacenes::all();
+        $productosCategorias = Productos_has_categorias::all();
+        return view('pages.productos.pizarra', compact('productos', 'categorias', 'almacenes', 'productosCategorias', 'filtro')); 
+
+    }
+
+
 }

@@ -9,6 +9,6 @@ class MainController extends Controller
     public function index()
     {
         $urlImagen = asset('img/crud.jpg');
-        return view('index', ['urlImagen' => $urlImagen]); 
+        return view('pages.home.index', ['urlImagen' => $urlImagen]); 
     }
 }

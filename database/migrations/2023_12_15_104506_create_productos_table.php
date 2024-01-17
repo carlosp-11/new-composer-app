@@ -16,11 +16,9 @@ return new class extends Migration
             $table->string('nombre', 150);
             $table->float('precio', 8, 2);
             $table->string('observaciones', 500);
-            $table->foreignId('almacen')
-                ->references('id')
-                ->on('almacenes')
-                ->onDelete('set default');
+            //$table->foreignId('almacen')->constrained('almacenes')->onUpdate('cascade')->onDelete('cascade');
         });
+        
     }
 
     /**
@@ -31,3 +29,10 @@ return new class extends Migration
         Schema::dropIfExists('productos');
     }
 };
+
+/*
+$table->foreignId('almacen')
+                ->references('id')
+                ->on('almacenes')
+                ->onDelete('set null');
+*/

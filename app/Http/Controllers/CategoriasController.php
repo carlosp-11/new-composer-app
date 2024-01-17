@@ -11,12 +11,14 @@ class CategoriasController extends Controller
     public function index()
     {
         $categorias = Categorias::all();
-        return view('gestionCategorias', compact('categorias')); 
+       
+        return view('pages.categorias.pizarra', compact('categorias')); 
     }
 
     public function create()
     {
-        return view('crearCategoria');
+        $modo = 'crear';
+        return view('pages.categorias.formulario', compact('modo'));
     }
 
     public function store(Request $request)
@@ -24,15 +26,16 @@ class CategoriasController extends Controller
         $request->validate([
             'nombre' => 'required|min:3|max:50',
         ]);
+
         DB::beginTransaction();
 
         try {
             $nuevaCategoria = new Categorias([
                 'nombre' => $request->nombre,
             ]);
-            $nuevaCategoria->saveOrFail();            
+            $nuevaCategoria->save();            
             DB::commit();            
-            return redirect('/lista-categorias')->with('success', 'Categoria creada correctamente');
+            return redirect('/categorias')->with('success', 'Categoria creada correctamente');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Error en la creación de la categoría: ' . $e->getMessage());
@@ -41,13 +44,14 @@ class CategoriasController extends Controller
 
     public function show(string $id)
     {
-        $categoria = Categorias::findOrFail($id);        
-        return view('editarCategoria', compact('categoria'));
+       // 
     }
 
     public function edit(string $id)
     {
-       //
+        $categoria = Categorias::findOrFail($id);
+        $modo = 'editar';        
+        return view('pages.categorias.formulario', compact('categoria', 'modo'));
     }
 
     public function update(Request $request, string $id)

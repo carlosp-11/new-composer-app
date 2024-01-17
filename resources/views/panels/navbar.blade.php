@@ -1,6 +1,5 @@
-
-  
-            <nav class="navbar navbar-expand-lg bg-info rounded">
+            
+            <nav class="navbar navbar-expand-lg bg-info">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="/">CRUD APP</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,8 +12,8 @@
                                   Almacenes
                                 </a>
                                 <ul class="dropdown-menu bg-light">
-                                  <li><a class="dropdown-item" href="/lista-almacenes">Lista de almacenes</a></li>
-                                  <li><a class="dropdown-item" href="/nuevo-almacen">Crear nuevo almacen</a></li>
+                                  <li><a class="dropdown-item" href="/almacenes">Lista de almacenes</a></li>
+                                  <li><a class="dropdown-item" href="/crear-almacen">Crear nuevo almacen</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
@@ -22,8 +21,8 @@
                                   Categorías
                                 </a>
                                 <ul class="dropdown-menu bg-light">
-                                  <li><a class="dropdown-item" href="/lista-categorias">Lista de categorías</a></li>
-                                  <li><a class="dropdown-item" href="/nueva-categoria">Crear nueva categoría</a></li>
+                                  <li><a class="dropdown-item" href="/categorias">Lista de categorías</a></li>
+                                  <li><a class="dropdown-item" href="/crear-categoria">Crear nueva categoría</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
@@ -32,7 +31,7 @@
                                 </a>
                                 <ul class="dropdown-menu bg-light">
                                   <li><a class="dropdown-item" href="/productos">Lista de productos</a></li>
-                                  <li><a class="dropdown-item" href="/nuevo-producto">Crear nuevo producto</a></li>
+                                  <li><a class="dropdown-item" href="/crear-producto">Crear nuevo producto</a></li>
                                 </ul>
                             </li>
                         </ul>

@@ -21,52 +21,29 @@ use Illuminate\Http\Request;
 
 Route::get('/', [MainController::class, 'index']);
 
-Route::get('/lista-productos', [ProductosController::class, 'index']);
+Route::get('/productos', [ProductosController::class, 'index']);
+Route::post('/productos', [ProductosController::class, 'filterOptions']);
+Route::post('/filtrar/productos/{filtro}', [ProductosController::class, 'show']);
+Route::get('/crear-producto', [ProductosController::class, 'create']);
+Route::post('/crear-producto', [ProductosController::class, 'store']);
+Route::get('productos/{id}/editar', [ProductosController::class, 'edit']);
+Route::put('productos/{id}/editar', [ProductosController::class, 'update']);
+Route::delete('productos/{id}', [ProductosController::class, 'destroy']);
 
-Route::get('/nuevo-producto', [ProductosController::class, 'create']);
+Route::get('/almacenes', [AlmacenesController::class, 'index']);
+Route::get('/crear-almacen', [AlmacenesController::class, 'create']);
+Route::post('/crear-almacen', [AlmacenesController::class, 'store']);
+Route::get('almacenes/{id}/editar', [AlmacenesController::class, 'edit']);
+Route::put('almacenes/{id}/editar', [AlmacenesController::class, 'update']);
+Route::delete('almacenes/{id}', [AlmacenesController::class, 'destroy']);
 
-Route::post('/nuevo-producto', [ProductosController::class, 'store']);
-
-Route::resource('productos', App\Http\Controllers\ProductosController::class);
-
-Route::get('/lista-categorias', [CategoriasController::class, 'index']);
-
-Route::get('/nueva-categoria', [CategoriasController::class, 'create']);
-
-Route::post('/nueva-categoria', [CategoriasController::class, 'store']);
-
-Route::resource('categorias', App\Http\Controllers\CategoriasController::class);
-
-Route::get('/lista-almacenes', [AlmacenesController::class, 'index']);
-
-Route::get('/nuevo-almacen', [AlmacenesController::class, 'create']);
-
-Route::post('/nuevo-almacen', [AlmacenesController::class, 'store']);
-
-Route::resource('almacenes', App\Http\Controllers\AlmacenesController::class);
-
-/*
-Route::post('/', function () {
-    // return view('index', [ProductosController::class, 'delete']);
- });
- */
-/*
-Route::get('/formulario', function () {
-    return view('formulario',  ['categorias' => Categorias::all()]);
-});
-*/
-/*
-Route::post('/formulario', function () {
-    return view('Procesando solicitud...');
-});
-*/
-
-//Route::get('/productos/{producto}/editar', [ProductosController::class, 'edit']); 
-
-/*
-Route::get('/productos/{producto}/editar', function() {    
-    return view('editarProducto', [ProductosController::class, 'edit']);
-});
-*/
+Route::get('/categorias', [CategoriasController::class, 'index']);
+Route::get('/crear-categoria', [CategoriasController::class, 'create']);
+Route::post('/crear-categoria', [CategoriasController::class, 'store']);
+Route::get('categorias/{id}/editar', [CategoriasController::class, 'edit']);
+Route::put('categorias/{id}/editar', [CategoriasController::class, 'update']);
+Route::delete('categorias/{id}', [CategoriasController::class, 'destroy']);
 
 //Route::resource('productos', App\Http\Controllers\ProductosController::class);
+
+
