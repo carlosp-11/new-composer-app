@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="text-center mx-5">
-        <h1 class="text-center text-secondary pt-5">{{  $modo == 'crear' ? 'Crea': 'Edita' }} un almacén</h1>
+        <h1 class="text-center text-secondary pt-5 fw-light">{{  $modo == 'crear' ? 'Crea': 'Edita' }} un almacén</h1>
     </div> 
     <div class="mx-5">
         <form action="{{ $modo == 'crear' ? url('/crear-almacen') : url('/almacenes/'.$almacen->id).'/editar' }}" 
@@ -18,7 +18,7 @@
                 <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Escriba el nombre del almacén" value="{{ $modo == 'editar' ? $almacen->nombre : ''}}">
             </div>
             <button type="submit" class="btn btn-primary mb-4 text-center">Crear</button>
-            <a href="{{ url('/') }}" class="btn btn-danger mb-4 text-center">Cancelar</a>
+            <a href="{{ url('/almacenes') }}" class="btn btn-secondary mb-4 text-center">Cancelar</a>
         </form>
     </div>
 @endsection

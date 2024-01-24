@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="text-center mx-5">
-        <h1 class="text-center text-secondary pt-5">{{  $modo == 'crear' ? 'Crea': 'Edita' }} un producto</h1>
+        <h1 class="text-center text-secondary pt-5  fw-light">{{  $modo == 'crear' ? 'Crea': 'Edita' }} un producto</h1>
     </div>    
     <div class="mx-5">
         <form action="{{ $modo == 'crear' ? url('/crear-producto') : url('/productos/'.$producto->id).'/editar' }}" 
@@ -48,7 +48,7 @@
                 @endforeach
             </div>
             <button type="submit" class="btn btn-primary mb-4 text-center">{{$modo == 'crear' ? 'Crear' : 'Editar'}}</button>
-            <a href="{{ url('/productos') }}" class="btn btn-danger mb-4 text-center">Cancelar</a>
+            <a href="{{ url('/productos') }}" class="btn btn-secondary mb-4 text-center">Cancelar</a>
         </form>
     </div>
 

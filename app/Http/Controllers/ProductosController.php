@@ -7,6 +7,7 @@ use App\Models\Almacenes;
 use App\Models\Productos_has_categorias;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ProductosController extends Controller
 {
@@ -86,11 +87,9 @@ class ProductosController extends Controller
         if ($request->filtro === 'almacen'){             
              if($request->termino != 'null'){
                 $productos = $request->filtro == 'almacen'? Productos::where('almacen', $request->termino)->get() : '' ;
-                dd('no es null');
              }
              if($request->termino == 'null'){
                 $productos = $request->filtro == 'almacen' ? Productos::whereNull('almacen')->get() : '';
-                //dd('es null');
              }
         }
         $filtro = $request->filtro;
