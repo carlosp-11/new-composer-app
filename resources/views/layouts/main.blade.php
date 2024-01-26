@@ -11,30 +11,10 @@
     <body>
         <div class="container-fluid p-0 m-0" style="height: 96vh;">           
             {{-- Include Navbar --}}
-                    @include('panels.navbar')
+            @include('panels.navbar')
             
-            @if (session('success'))
-                <div class="alert alert-success px-0 mx-0 alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-            @if ($errors->any())
-                <div class="alert alert-danger px-0 mx-0 alert-dismissible fade show" role="alert">
-                  <ul>
-                    @foreach ($errors->all() as $error)
-                      <li>{{ $error }}</li>
-                    @endforeach
-                  </ul>
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-            @if (session('error'))
-              <div class="alert alert-danger px-0 mx-0 alert-dismissible fade show" role="alert">
-                {{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>
-            @endif
+            {{-- Include Alerts --}}
+            @include('panels.alerts')
         
             {{-- Include Page Content --}}
             @yield('content')

@@ -20,8 +20,11 @@ use Illuminate\Http\Request;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+//Ruta de Home
 Route::get('/', [MainController::class, 'index']);
 
+//Rutas de Productos
 Route::get('/productos', [ProductosController::class, 'index'])->middleware(['web', 'auth']);;
 Route::post('/productos', [ProductosController::class, 'filterOptions'])->middleware('auth');;
 Route::post('/filtrar/productos/{filtro}', [ProductosController::class, 'show'])->middleware('auth');;
@@ -31,6 +34,7 @@ Route::get('productos/{id}/editar', [ProductosController::class, 'edit'])->middl
 Route::put('productos/{id}/editar', [ProductosController::class, 'update'])->middleware('auth');;
 Route::delete('productos/{id}', [ProductosController::class, 'destroy'])->middleware('auth');;
 
+//Rutas de Almacenes
 Route::get('/almacenes', [AlmacenesController::class, 'index'])->middleware('auth');;
 Route::get('/crear-almacen', [AlmacenesController::class, 'create'])->middleware('auth');;
 Route::post('/crear-almacen', [AlmacenesController::class, 'store'])->middleware('auth');;
@@ -38,6 +42,7 @@ Route::get('almacenes/{id}/editar', [AlmacenesController::class, 'edit'])->middl
 Route::put('almacenes/{id}/editar', [AlmacenesController::class, 'update'])->middleware('auth');;
 Route::delete('almacenes/{id}', [AlmacenesController::class, 'destroy'])->middleware('auth');;
 
+//Rutas de Categorias
 Route::get('/categorias', [CategoriasController::class, 'index'])->middleware('auth');;
 Route::get('/crear-categoria', [CategoriasController::class, 'create'])->middleware('auth');;
 Route::post('/crear-categoria', [CategoriasController::class, 'store'])->middleware('auth');;
@@ -45,9 +50,9 @@ Route::get('categorias/{id}/editar', [CategoriasController::class, 'edit'])->mid
 Route::put('categorias/{id}/editar', [CategoriasController::class, 'update'])->middleware('auth');;
 Route::delete('categorias/{id}', [CategoriasController::class, 'destroy'])->middleware('auth');;
 
+//Rutas de Login/Signup
 Route::get('/login', [UserController::class, 'index'])->name('login');
 Route::post('/login', [UserController::class, 'authenticate']);
 Route::post('/logout', [UserController::class, 'logout']);
-Route::get('/signup', [UserController::class, 'create'])->name('signup');
+Route::get('/signup', [UserController::class, 'create']);
 Route::post('/signup', [UserController::class, 'store']);
-
