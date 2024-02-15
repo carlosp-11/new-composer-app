@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 use App\Models\Almacenes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class AlmacenesController extends Controller
 {
     public function index()
     {
-        $almacenes = Almacenes::all();
+        $userId = auth()->id();
+        $almacenes = Almacenes::where('id_user', $userId)->paginate(10);
         return view('pages.almacenes.pizarra', compact('almacenes'));
     }
    
@@ -21,17 +23,20 @@ class AlmacenesController extends Controller
 
     public function store(Request $request)
     {
+        $userId = auth()->id();
         $request->validate([
             'nombre' => 'required|min:3|max:50',
         ]);
         DB::beginTransaction();
-
+        
         try {
             $nuevoAlmacen = new Almacenes([
                 'nombre' => $request->nombre,
+                'id_user' => $userId,
             ]);
             $nuevoAlmacen->save();            
-            DB::commit();            
+            DB::commit();     
+            Session::increment('numAlmacenes');       
             return redirect('/almacenes')->with('success', 'Almacén creado correctamente');
         } catch (\Exception $e) {
             DB::rollBack();
@@ -74,6 +79,7 @@ class AlmacenesController extends Controller
         try {
             $almacen = Almacenes::findOrFail($id);
             $almacen->delete();
+            Session::decrement('numAlmacenes');
             return redirect('/almacenes')->with('success', 'Almacén eliminado correctamente');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Error en la eliminación del almacén: ' . $e->getMessage());

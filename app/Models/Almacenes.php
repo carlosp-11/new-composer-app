@@ -9,7 +9,7 @@ class Almacenes extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    protected $fillable= ['nombre'];
+    protected $fillable= ['nombre', 'id_user'];
     public function productos()
     {
         return $this->belongsToMany(Productos::class, 'productos_almacenes');

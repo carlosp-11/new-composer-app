@@ -4,144 +4,241 @@
 @section('title', 'PRODUCTOS')
 
 @section('content')
-    <div class="row pt-5 px-0 mx-5">
-        <div  class="col"> 
-            <h1 class="text-center text-secondary fw-light"> Productos </h1>
-        </div>
-    </div>   
-    <div class="pt-3 mx-5 my-5 px-0">            
-        <div class="row justify-content-center mx-0">
-            <div class="col-12 col-md-4 ">                
-                <div class="row" >
-                    <label class="" for="filtro">Filtrar por: </label>         
-                    <form method="POST" class="col p-0 m-0 border rounded-start {{ $filtro == 'categoria'? 'bg-primary' : 'bg-secondary' }}" action="{{ url('/productos?filtro=categoria') }}">
-                        @csrf 
-                            <button type="submit" class="btn w-100 {{ $filtro == 'categoria'? 'text-light': ''}}" aria-pressed="true"> Categoria </button>
-                    </form>                            
-                    <form method="POST" class="col p-0 m-0 border rounded-end {{ $filtro == 'almacen'? 'bg-primary' : 'bg-secondary' }}" action= "{{url('productos?filtro=almacen')}}">
-                        @csrf 
-                            <button type="submit" class="btn w-100 {{ $filtro == 'almacen'? 'text-light': ''}}"> Almacen </button>
-                    </form>           
+    <div class="pt-5 mt-5 px-0 mx-auto">
+        <div class="row ">
+            <div class="col">            
+                <div class="card mb-3" style="width: 600px;">
+                    <div class="row g-0">
+                        <div class="col">
+                            <div class="card-body">                                    
+                                <div id="filtro" class="row">
+                                    <div class="col-2">
+                                        <div class="row">
+                                        <button id="btnCategoria" type="button"  
+                                            onclick="filterRequest('categoria')" 
+                                            class="btn col text-secondary " aria-pressed="false"
+                                        > 
+                                            <i class="fa-solid fa-tags"></i>
+                                        </button> 
+                                        <button id="btnAlmacen" type="button" 
+                                            onclick="filterRequest('almacen')" 
+                                            class="btn col text-secondary"
+                                        > 
+                                            <i class="fa-solid fa-warehouse"></i>
+                                        </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-8 justify-content-center text-center align-self-center">
+                                        <select class="form-select" id="termino" name="termino">
+                                            <option> Selecciona una opción </option>
+                                        </select>
+                                    </div>  
+                                    <div class="col-2 justify-content-center text-center align-self-center">
+                                        <button type="submit" class="btn btn-secondary w-100" id="buscarBtn">
+                                            Filtrar
+                                        </button>
+                                    </div>
+                                </div>                
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>          
-              
-                    <!-- 
-                    <div class="col-3 mt-3">                   
-                        <form method="POST" action="{{ url('/productos?filtro=categoria') }}">
-                             @csrf 
-                            <button type="submit" class="">Categoria</button>
-                        </form>
-                    </div>
-                    <div class="col-3  mt-3">
-                        <form method="POST" action= "{{url('productos?filtro=almacen')}}">
-                            @csrf 
-                                <button type="submit" class="btn btn-secondary"> Almacen </button>
-                        </form> 
-                    </div>
-                    -->                
+            </div> 
+        </div>   
 
-            <div class="col-12 col-md-4">                
-                <form action="{{ url('filtrar/productos/'.$filtro) }}" 
-                method="POST" class="row" id="formulario">
-                    @csrf
-                    <div class="col-12 col-md-9">
-                        <label for="termino">Término:</label>
-                        <select class="form-select" id="termino" name="termino">
-                            @if ($filtro ==='')
-                                <option> Selecciona un filtro </option>
-                            @elseif ($filtro === 'categoria')
-                                <option value="null"> Sin categoría </option>
-                                @foreach ($categorias as $categoria)
-                                    <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
-                                @endforeach
-                            @elseif ($filtro === 'almacen')
-                                <option value="null"> Sin almacén </option>
-                                @foreach ($almacenes as $almacen)
-                                    <option value="{{ $almacen->id }}">{{ $almacen->nombre }}</option>
-                                @endforeach
-                            @endif
-                        </select>
-                        <input type="hidden" name="filtro" value="{{ $filtro }}">
-                    </div>            
-                    <div class="col-12 col-md-3 mt-4 justify-content-center text-center">
-                        <button type="submit" class="btn btn-secondary">Buscar</button>
-                    </div>
-                </form>                
-            </div>
-        </div>
-    </div>
-           
-        
-
-
-
-    <div class="pt-3 mx-5 my-5 px-0">
-    <div class="row pt-3 px-0">
-        <div  class="col px-0 mx-0">            
-            <table class="table px-0 mx-0">
-                <thead>
-                    <tr class="px-0 mx-0">
-                        <th scope="col" class="col-2  text-break align-top">Nombre</th>
-                        <th scope="col" class="col-1   align-top">Precio</th>
-                        <th scope="col" class="col-2  text-break align-top">Almacén</th>
-                        <th scope="col" class="col-2  text-break align-topv">Categorías</th>
-                        <th scope="col" class="col-3  text-break align-top">Observaciones</th>
-                        <th scope="col" class="col-2 "></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($productos as $row)
-                        <tr class="px-0 mx-0"> 
-                            <td class="text-break "> {{ $row->nombre }} </td>
-                            <td class="text-break text-end"> 
-                                {{ number_format($row->precio, 2, ',', '.') }} € 
-                            </td>
-                            <td class="text-break "> 
-                                {{ $row->almacen ? $almacenes->find($row->almacen)->nombre : 'Sin almacén' }}
-                            </td class="text-break ">
-                            <td class="text-break ">
-                                @php
-                                $categoriasIds = $productosCategorias->where('id_producto', $row->id)->pluck('id_categoria');
-                                @endphp
-                                @forelse ($categoriasIds as $item)
-                                @php
-                                $categoria = $categorias->find($item);
-                                @endphp
-                                @if ($categoria)
-                                {{ $categoria->nombre }}
-                                @endif
-                                @empty
-                                Sin categoría
-                                @endforelse
-                            </td>
-                            <td class="text-break "> {{ $row->observaciones }} </td>
-                            <td class=" text-center">
-                                <div class="row"> 
-                                    <span class="col-12 col-sm-6">
-                                        <a href="{{ url('productos/'.$row->id).'/editar' }}" 
-                                        class="btn btn-warning">
-                                            <i class="fa-solid fa-pen"></i>
-                                        </a>
+        @foreach ($productos as $row)
+            <div class="row ">
+                <div class="col">            
+                    <div class="card mb-3" style="width: 600px;">
+                        <div class="row g-0">
+                            <div class="col-md-4 align-self-center text-center">
+                                <img src="{{ asset('img/pack.png') }}" class="img-fluid rounded-start" 
+                                    alt="Producto"
+                                >
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body pe-3">
+                                    <span class="row justifiy-content-between"> 
+                                        <h5 class="card-title col"> {{ $row->nombre }} </h5> 
+                                        <h6 class="col text-secondary text-end">
+                                            {{ number_format($row->precio, 2, ',', '.') }} €  
+                                        </h6> 
                                     </span>
-                                    <span class="col-12 col-sm-6"> 
-                                        <form method="POST" action= "{{url('productos/'.$row->id)}}">
+                                    <p class="card-text py-0">
+                                        @php
+                                            $categoriasIds = $productosCategorias->
+                                            where('id_producto', $row->id)->pluck('id_categoria');
+                                        @endphp
+                                        @forelse ($categoriasIds as $item)
+                                            @php
+                                                $categoria = $categorias->find($item);
+                                            @endphp
+                                            @if ($categoria)
+                                                {{ $categoria->nombre }}
+                                            @endif
+                                            @empty
+                                            Sin categoría
+                                        @endforelse
+                                        <br>
+                                        {{ $row->almacen }} 
+                                        <br>
+                                        {{ $row->observaciones }}
+                                    </p>
+                                    <div class="row justify-content-end">
+                                        <a href="{{ url('productos/'.$row->id).'/editar' }}" 
+                                            class="btn col-2"
+                                        >
+                                            <i class="fa-solid fa-pen text-secondary fs-4"></i>
+                                        </a>
+                                        <form method="POST" action= "{{url('productos/'.$row->id)}}" 
+                                            class=" col-2"
+                                        >
                                             @csrf
                                             @method('DELETE')  
-                                                <button type="submit" class="btn btn-danger">
-                                                    <i class="fa-solid fa-trash-can"></i>
-                                                </button>
+                                            <button type="button" class="btn" data-bs-toggle="modal" 
+                                                data-bs-target="#exampleModal"
+                                            >
+                                                <i class="fa-solid fa-trash-can text-secondary fs-4"></i>
+                                            </button>
                                         </form>
-                                    </span>
+                                    </div>
                                 </div>
-                            </td>  
-                        </tr>                                 
-                    @endforeach                               
-                </tbody>
-            </table>            
-        </div>
-    </div>
-    <div class="pt-5 text-center px-0 mx-0"> 
-        <a href="{{ url('/crear-producto') }}" class="btn btn-primary" > Crear nuevo Producto </a>
-    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
 
+        <div class="my-5 ">
+            <div class="pb-5 text-center px-0 mx-auto">
+                <a href="{{ url('/crear-producto') }}" class="rounded-circle" > 
+                    <i class="fa-solid fa-circle-plus fs-1"></i> 
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <nav class="py-5  mx-auto" aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item {{ $productos->onFirstPage() ? 'disabled' : '' }}">
+                        <a class="page-link" href="{{ $productos->previousPageUrl() }}">
+                            Anterior
+                        </a>
+                    </li>
+
+                    @foreach ($productos->getUrlRange(1, $productos->lastPage()) as $page => $url)
+                        <li class="page-item {{ $page == $productos->currentPage() ? 'active' : '' }}">
+                            <a class="page-link" href="{{ $url }}">
+                                {{ $page }}
+                            </a>
+                        </li>
+                    @endforeach
+
+                    <li class="page-item {{ $productos->currentPage() == $productos->lastPage() ? 
+                        'disabled' : '' }}"
+                    >
+                        <a class="page-link" href="{{ $productos->nextPageUrl() }}">
+                            Siguiente
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+    
+
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> 
+    <script>
+        var filtroSeleccionado = '';
+
+        function filterRequest(selectFilter) {
+            filtroSeleccionado = selectFilter;
+            // Obtener los botones específicos por sus identificadores
+            var botonCategoria = document.getElementById('btnCategoria');
+            var botonAlmacen = document.getElementById('btnAlmacen');
+
+            // Restablecer estilos para ambos botones
+            console.log("hola", botonCategoria);
+            // Establecer estilos solo para el botón seleccionado
+            if (selectFilter === 'categoria') {
+                botonCategoria.classList.remove( 'text-secondary');
+                botonCategoria.classList.add( 'text-primary');
+                botonAlmacen.classList.remove( 'text-primary');
+                botonAlmacen.classList.add('text-secondary');
+            } else if (selectFilter === 'almacen') {
+                botonAlmacen.classList.remove('text-secondary');
+                botonAlmacen.classList.add('text-primary');
+                botonCategoria.classList.remove( 'text-primary');
+                botonCategoria.classList.add( 'text-secondary');
+            }    
+            console.log("chao", botonCategoria);
+            // Obtén el elemento select por su ID (puedes ajustar el ID según sea necesario)
+            var selectElement = document.getElementById('termino');
+
+            // Limpia las opciones existentes en el select
+            selectElement.innerHTML = '';
+
+            // Crea nuevas opciones según el valor de selectFilter
+            if (selectFilter === 'categoria') {
+                var sinCategoriaOption = document.createElement('option');
+                sinCategoriaOption.value = 'null';
+                sinCategoriaOption.text = 'Sin categoría';
+                selectElement.add(sinCategoriaOption);
+
+                // Si es 'categoria', crea opciones para las categorías
+                @foreach ($categorias as $categoria)
+                    var option = document.createElement('option');
+                    option.value = '{{ $categoria->id }}';
+                    option.text = '{{ $categoria->nombre }}';
+                    selectElement.add(option);
+                @endforeach
+            } else if (selectFilter === 'almacen') {
+                var sinAlmacenOption = document.createElement('option');
+            sinAlmacenOption.value = 'null';
+            sinAlmacenOption.text = 'Sin almacén';
+            selectElement.add(sinAlmacenOption);
+                // Si es 'almacen', crea opciones para los almacenes
+                @foreach ($almacenes as $almacen)
+                    var option = document.createElement('option');
+                    option.value = '{{ $almacen->id }}';
+                    option.text = '{{ $almacen->nombre }}';
+                    selectElement.add(option);
+                @endforeach
+            }
+
+        }
+
+        $(document).ready(function () {
+                $("#buscarBtn").on("click", function () {
+                    var selectedTerm = $("#termino").val();
+                    filterProducts(selectedTerm);
+                });
+
+            function filterProducts(term) {
+                $.ajax({
+                url: '{{ url("/productos") }}',
+                type: 'POST',
+                data: { 
+                    filtro: filtroSeleccionado,
+                    termino: term,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    // Actualiza la página o maneja la respuesta según tus necesidades
+                    console.log('ajax completo')
+                    console.log(response);
+                    $('#lista-productos').html(response.productosHtml);
+                    //$('#lista-productos').html(response);
+                    //location.reload();
+                },
+                error: function(error) {
+                    console.log(error);
+                    // Manejar errores si es necesario
+                }
+            });
+        
+            }
+            });
+    </script>
 @endsection

@@ -8,19 +8,16 @@
         <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
         <title>CRUD APP - @yield('title')</title>
     </head>
-    <body> 
-        <div class="container-fluid d-flex p-0 py-5 m-0 bg-secondary bg-opacity-25" style="min-height: 100vh;">           
-            {{-- Include Navbar --}}
-            @include('panels.navbar')
-            
+    <body class="">
+        <div class="container-fluid p-0 m-0 bg-secondary bg-opacity-25" style="min-height: 100vh;"> 
             {{-- Include Alerts --}}
-            @include('panels.alerts')
-        
+            @include('panels.alerts')       
+
             {{-- Include Page Content --}}
-            @yield('content')
-                
+            @yield('content')   
+
             {{-- include footer --}}
-            @include('panels.footer')               
+            @include('panels.footer') 
         </div>
     </body>
     {{-- include default scripts --}}

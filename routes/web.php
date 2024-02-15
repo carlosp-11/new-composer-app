@@ -22,12 +22,13 @@ use Illuminate\Http\Request;
 */
 
 //Ruta de Home
-Route::get('/', [MainController::class, 'index']);
+//Route::get('/', [MainController::class, 'index']);
+Route::get('/', [UserController::class, 'index'])->name('login');
 
 //Rutas de Productos
 Route::get('/productos', [ProductosController::class, 'index'])->middleware(['web', 'auth']);;
-Route::post('/productos', [ProductosController::class, 'filterOptions'])->middleware('auth');;
-Route::post('/filtrar/productos/{filtro}', [ProductosController::class, 'show'])->middleware('auth');;
+Route::post('/productos', [ProductosController::class, 'show'])->middleware('auth');;
+//Route::post('/filtrar/productos/{filtro}', [ProductosController::class, 'show'])->middleware('auth');;
 Route::get('/crear-producto', [ProductosController::class, 'create'])->middleware('auth');;
 Route::post('/crear-producto', [ProductosController::class, 'store'])->middleware('auth');;
 Route::get('productos/{id}/editar', [ProductosController::class, 'edit'])->middleware('auth');;
@@ -56,3 +57,11 @@ Route::post('/login', [UserController::class, 'authenticate']);
 Route::post('/logout', [UserController::class, 'logout']);
 Route::get('/signup', [UserController::class, 'create']);
 Route::post('/signup', [UserController::class, 'store']);
+Route::get('/forgot-password', function () {
+    return view('auth.forgot-password');
+})->middleware('guest')->name('password.request');
+
+//Routas de Área Personal
+Route::get('/private', [UserController::class, 'show'])->middleware('auth');
+//Route::post('/private', [UserController::class, ''])->middleware('auth');
+Route::delete('/private', [UserController::class, 'destroy'])->middleware('auth');

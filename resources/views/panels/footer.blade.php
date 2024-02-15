@@ -1,6 +1,6 @@
-<footer class="flex-wrap px-1 mx-0 border-top bg-light fixed-bottom" 
-style="min-height: 40px;">
-    <div class="row mx-2">
+<footer class="flex-wrap px-0 mx-0 border-top bg-white fixed-bottom" 
+style="height: 50px;">
+    <div class="row mx-0 mt-0">
         <div class="col-6">
             <p class="pt-1 fw-light"> © 2023-2024 </p>
         </div>

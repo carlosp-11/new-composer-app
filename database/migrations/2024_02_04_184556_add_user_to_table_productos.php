@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('productos', function (Blueprint $table) {
-            $table->unsignedBigInteger('almacen')->nullable();
-            $table->foreign('almacen')->references('id')->on('almacenes')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('id_user')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -23,9 +22,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('productos', function (Blueprint $table) {
-            $table->dropForeign(['almacen']);
-            $table->dropColumn('almacen');
+            $table->dropForeign(['id_user']);
+            $table->dropColumn('id_user');
         });
     }
 };
-

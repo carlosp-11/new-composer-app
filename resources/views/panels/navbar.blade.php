@@ -1,95 +1,62 @@
-<nav class="navbar navbar-expand-lg bg-info m-0 p-0 " style="min-height: 60px;">
-    <div class="container-fluid row">
-        <div class="col-2">
-        <a class="navbar-brand fs-3 text-light fw-bold" href="/" 
-        style="-webkit-text-stroke: 1px black;">
-            CRUD APP
-        </a>
-        </div>
-        <div class="col-2 text-end">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
-        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
-        aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"/>
-        </button>
-        </div>
-        
-        <div class="collapse navbar-collapse col-8" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" 
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                        Almacenes
-                    </a>
-                    <ul class="dropdown-menu bg-light">
-                        <li>
-                            <a class="dropdown-item" href="/almacenes">
-                                Lista de almacenes
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="/crear-almacen">
-                                Crear nuevo almacen
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" 
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                        Categorías
-                    </a>
-                    <ul class="dropdown-menu bg-light">
-                        <li>
-                            <a class="dropdown-item" href="/categorias">
-                                Lista de categorías
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="/crear-categoria">
-                                Crear nueva categoría
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" 
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                        Productos
-                    </a>
-                    <ul class="dropdown-menu bg-light">
-                        <li>
-                            <a class="dropdown-item" href="/productos">
-                                Lista de productos
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="/crear-producto">
-                                Crear nuevo producto
-                            </a>
-                        </li>
-                    </ul>                                
-                </li>                
-                <li>
-                    @guest
-                        <a class="nav-link " href="/login" role="button">
-                            Iniciar sesión
-                        </a>
-                    @else
-                        <button type="button" class="btn " data-bs-toggle="modal" 
-                        data-bs-target="#sessionModal">
-                            Cerrar sesión
-                        </button>
-                    @endguest
-                </li>                         
-            </ul>
-        </div>
+<ul class="nav bg-white m-0 p-0 fixed-top justify-content-between" style="min-height: 60px;">
+    <span class="navbar-brand fs-4 fw-bolder text-primary placeholder-glow align-self-center">
+        CRUD APP
+    </span>
+    <div class="row">
+        <li class= "col-4 align-self-center">
+            <a class="nav-link position-relative" href="/almacenes" id="btnNavAlmacen">
+                <i class="fa-solid fa-warehouse fs-4 text-secondary"></i>
+                <span class="badge text-bg-danger position-absolute top-50 start-0 translate-middle">
+                    {{ session('numAlmacenes') <= 99? session('numAlmacenes') : '+99' }}
+                </span>
+            </a>
+        </li>
+        <li class= "col-4 align-self-center">
+            <a class="nav-link position-relative" href="/categorias" id="btnNavCategoria">
+                <i class="fa-solid fa-tags fs-4 text-secondary"></i>
+                <span class="badge text-bg-danger position-absolute top-50 start-0 translate-middle">
+                    {{ session('numCategorias') <= 99?  session('numCategorias') : '+99' }}
+                </span>
+            </a>
+        </li>
+        <li class= "col-4 align-self-center">
+            <a class="nav-link position-relative" href="/productos">
+                <i class="fa-solid fa-boxes-stacked fs-4 text-secondary"></i>
+                <span class="badge text-bg-danger position-absolute top-50 start-0 translate-middle">
+                    {{ session('numProductos') <= 99?  session('numProductos') : '+99' }}
+                </span>
+            </a>
+        </li>
     </div>
-</nav>
+    <span class= "align-self-center">
+    <li>                              
+        <a class="nav-link dropdown-toggle" href="#" role="button" 
+            data-bs-toggle="dropdown" aria-expanded="false"
+        >
+        <i class="fa-solid fa-user fs-4"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end bg-light">
+            <div>
+                <a class="dropdown-item" href="/private">
+                    Área Personal
+                </a>
+            </div>
+            <div>
+                <button type="button" class="btn dropdown-item" data-bs-toggle="modal" 
+                    data-bs-target="#sessionModal"
+                >
+                        Cerrar sesión
+                </button>
+            </div>
+        </ul>
+    </li>
+    </span>
+</ul>
 
 <!-- Modal -->
 <div class="modal fade" id="sessionModal" tabindex="-1" aria-labelledby="sessionModalLabel" 
-aria-hidden="true">
+    aria-hidden="true"
+>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

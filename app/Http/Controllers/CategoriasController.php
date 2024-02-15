@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Categorias;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class CategoriasController extends Controller
 {
     public function index()
     {
-        $categorias = Categorias::all();
-       
+        $userId = auth()->id();
+        $categorias = Categorias::where('id_user', $userId)->paginate(10);       
         return view('pages.categorias.pizarra', compact('categorias')); 
     }
 
@@ -23,6 +24,7 @@ class CategoriasController extends Controller
 
     public function store(Request $request)
     {
+        $userId = auth()->id();
         $request->validate([
             'nombre' => 'required|min:3|max:50',
         ]);
@@ -32,9 +34,11 @@ class CategoriasController extends Controller
         try {
             $nuevaCategoria = new Categorias([
                 'nombre' => $request->nombre,
+                'id_user' => $userId,
             ]);
             $nuevaCategoria->save();            
-            DB::commit();            
+            DB::commit();
+            Session::increment('numCategorias');            
             return redirect('/categorias')->with('success', 'Categoria creada correctamente');
         } catch (\Exception $e) {
             DB::rollBack();
@@ -77,6 +81,7 @@ class CategoriasController extends Controller
         try {
             $categoria = Categorias::findOrFail($id);
             $categoria->delete();
+            Session::decrement('numCategorias');
             return redirect('/categorias')->with('success', 'Categoría eliminada correctamente');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Error en la eliminación de la categoría: ' . $e->getMessage());
