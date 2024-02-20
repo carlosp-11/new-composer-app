@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="align-self-center mx-auto">
-    <div class="card mb-3 px-0 align-self-center mx-5" style="max-width: 540px;">
+    <div class="card mb-3 px-0 align-self-center mx-5" style="max-width: 600px;">
         <div class="row g-0 mx-0 p-0">
             <div class="card-header">
                 <h1 class="text-center text-secondary fw-light"> 

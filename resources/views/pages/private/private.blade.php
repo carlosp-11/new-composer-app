@@ -6,8 +6,10 @@
 <div class="pt-5 mt-5 px-0 mx-auto">
 
 <div class="row ">
-    <div class="col-12 col-lg-6 align-self-center">
-        @include('panels.index')
+    <div class="col">
+        <div class="card mb-3 m-0 px-0 pb-5 " style="width: 600px;">
+            @include('panels.index')
+        </div>
     </div>
 </div>
 

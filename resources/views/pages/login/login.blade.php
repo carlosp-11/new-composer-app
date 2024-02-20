@@ -5,7 +5,7 @@
 @section('content')
 <div class="mt-0 p-0">
     <div class="row px-0 mx-0">
-        <div class= "col-12 col-md-6">
+        <div class= "mt-5 col-12 col-md-6">
             @include('panels.index')
         </div>
         <div class="col-12 col-md-6 px-5  mt-5">       

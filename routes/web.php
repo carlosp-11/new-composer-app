@@ -28,6 +28,7 @@ Route::get('/', [UserController::class, 'index'])->name('login');
 //Rutas de Productos
 Route::get('/productos', [ProductosController::class, 'index'])->middleware(['web', 'auth']);;
 Route::post('/productos', [ProductosController::class, 'show'])->middleware('auth');;
+//Route::post('/productos', [ProductosController::class, 'show']);
 //Route::post('/filtrar/productos/{filtro}', [ProductosController::class, 'show'])->middleware('auth');;
 Route::get('/crear-producto', [ProductosController::class, 'create'])->middleware('auth');;
 Route::post('/crear-producto', [ProductosController::class, 'store'])->middleware('auth');;

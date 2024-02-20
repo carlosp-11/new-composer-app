@@ -57,7 +57,7 @@
         <div class="my-5">
             <div class="pb-5 text-center px-0 mx-auto"> 
                 <a href="{{ url('/crear-categoria') }}" class="rounded-circle" > 
-                    <i class="fa-solid fa-circle-plus fs-1"></i> 
+                    <i class="fa-solid fa-circle-plus display-3"></i> 
                 </a>
             </div>
         </div>

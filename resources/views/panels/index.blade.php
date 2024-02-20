@@ -1,6 +1,6 @@
 
     <!-- <div class="mx-auto px-0 pt-5 bg-transparent" style="max-width:50rem;"> -->
-    <div class="mx-auto px-5 pt-5 bg-transparent">
+    <div class="mx-auto px-5 bg-transparent">
         <div class="row bg-transparent mt-5 mx-4" >
             <div class="col text-center" >
                 <h1 class="fw-bolder text-primary" style="font-size: clamp(30px, 10vw, 130px);" id="letraC"> C </h1>
