@@ -67,7 +67,13 @@
         </div>
     </div>
 
-
+    <div style="text-align: center; margin-top: 50px;">
+        <h1>Enviar Correo de Bienvenida</h1>
+        <form method="POST" action="{{ route('enviar-bienvenida') }}">
+            @csrf
+            <button type="submit" style="padding: 10px 20px; background-color: #007bff; color: #fff; border: none; cursor: pointer; border-radius: 5px;">Enviar Correo de Bienvenida</button>
+        </form>
+    </div>
     
 </div>
 @endsection

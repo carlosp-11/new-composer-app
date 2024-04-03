@@ -65,4 +65,5 @@ Route::get('/forgot-password', function () {
 //Routas de Área Personal
 Route::get('/private', [UserController::class, 'show'])->middleware('auth');
 //Route::post('/private', [UserController::class, ''])->middleware('auth');
+Route::post('/private', [UserController::class, 'sendWelcomeEmail'])->name('enviar-bienvenida');
 Route::delete('/private', [UserController::class, 'destroy'])->middleware('auth');

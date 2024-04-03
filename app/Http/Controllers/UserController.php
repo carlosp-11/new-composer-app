@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Session;
 //use Sanctum\Http\Controllers\HandlesSanctumLogin;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\WelcomeEmail;
 
 class UserController extends Controller
 {
@@ -144,4 +146,19 @@ class UserController extends Controller
                     ? back()->with(['status' => __($status)])
                     : back()->withErrors(['email' => __($status)]);
     }
+
+    public function sendWelcomeEmail(Request $request)
+    {
+        // Aquí puedes agregar la lógica de validación de la solicitud si es necesario
+
+        // Obtener la dirección de correo electrónico del usuario (si está disponible)
+        $userEmail = $request->user()->email;
+
+        // Enviar el correo electrónico de bienvenida
+        Mail::to($userEmail)->send(new WelcomeEmail());
+
+        // Redireccionar a una página de confirmación u otra página de tu elección
+        return redirect(('/private'))->with('success', 'El correo de bienvenida ha sido enviado exitosamente.');
+    }
+
 }
