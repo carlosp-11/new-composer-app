@@ -6,10 +6,19 @@ use App\Models\Categorias;
 use App\Models\Almacenes;
 use App\Models\Productos_has_categorias;
 use App\Models\User_has_productos;
+use App\Models\Images;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use GuzzleHttp\Client;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use GuzzleHttp\Psr7\Response;
+use Illuminate\Http\Response as IlluminateResponse;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Http\Testing\FileFactory;
+use Illuminate\Http\File;
+use Illuminate\Support\Facades\Storage;
 
 class ProductosController extends Controller
 {
@@ -43,7 +52,7 @@ class ProductosController extends Controller
             $producto = new Productos([
                 'nombre' => $request->nombre,
                 'precio' => $request->precio,
-                'observaciones' => $request->observaciones,
+                'descripcion' => $request->descripcion,
                 'almacen' => $request->almacen,
                 'id_user' => $userId,
             ]);
@@ -60,7 +69,7 @@ class ProductosController extends Controller
                 ]);
             }
             DB::commit(); 
-            
+            $this->requestQRCode($idProducto);
             Session::increment('numProductos');
             return redirect('/productos')->with('success', 'Producto creado correctamente');
         } catch (\Exception $e) {
@@ -198,7 +207,7 @@ class ProductosController extends Controller
         $request->validate([
             'nombre' => 'required|min:3|max:150',
             'precio' => 'required|numeric|min:0.01',
-            'observaciones' => 'required|string|max:255',
+            'descripcion' => 'required|string|max:255',
             'almacen' => 'required|integer|exists:almacenes,id',
             'categorias' => 'required|array',
         ]);
@@ -216,5 +225,42 @@ class ProductosController extends Controller
 
     }
 
+    public function requestQRCode(string $id){
+        $productURL='http://new-composer-app.test/productos/'.$id.'/editar';
+        $urlAPI = 'https://getqrcode.p.rapidapi.com/api/getQR';
+        $queryParams = [
+            'forQR' => $productURL,
+        ];
+        $headers = [
+            'X-RapidAPI-Key' => env('X_RAPID_API_KEY'),
+            'X-RapidAPI-Host' => 'getqrcode.p.rapidapi.com',
+        ];
 
+        try {
+            $client = new Client();
+            $response = $client->request('GET', $urlAPI, [
+                'query' => $queryParams,
+                'headers' => $headers,
+            ]);
+           $result = $response->getBody()->getContents();
+           $this->uploadFile($result); 
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Error al generar el código QR: ' . $e->getMessage());
+        }
+    }
+
+    public function uploadFile($file) {
+        try {
+        $archivoTemporal = tempnam(sys_get_temp_dir(), 'archivo_temporal');
+        file_put_contents($archivoTemporal, $file);
+    
+        // Subir el archivo a Cloudinary
+        $cloudinaryResponse = Cloudinary::upload($archivoTemporal)->getSecurePath();
+    
+        // Eliminar el archivo temporal
+        unlink($archivoTemporal);
+     } catch (\Exception $e) {
+         return redirect()->back()->with('error', 'Error al subir archivo: ' . $e->getMessage());
+     }
+    }
 }

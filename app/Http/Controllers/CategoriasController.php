@@ -34,6 +34,7 @@ class CategoriasController extends Controller
         try {
             $nuevaCategoria = new Categorias([
                 'nombre' => $request->nombre,
+                'descripcion' => $request->descripcion,
                 'id_user' => $userId,
             ]);
             $nuevaCategoria->save();            

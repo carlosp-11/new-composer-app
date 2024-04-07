@@ -13,6 +13,11 @@
     </div>
 </div>
 
+<div > 
+    <p class="animated rotate 2s infinite"> HOLA </p>
+    <img class="" src="{{ asset('img/cd_icon.png') }}" alt="Icono de CD" style="animation: rotate 2s infinite">
+</div>
+
 
     <div class="row ">
         <div class="col">            

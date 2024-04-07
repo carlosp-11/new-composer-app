@@ -24,6 +24,10 @@
                         <input type="text" class="form-control" id="nombre" name="nombre" 
                             placeholder="Escriba el nombre de la categoría" value="{{ $modo == 'editar'? $categoria->nombre : ''}}"
                         >
+                        <label for="nombre" class="form-label">Descripción</label>
+                        <input type="text" class="form-control" id="descripcion" name="descripcion" 
+                            placeholder="Escriba una descripción" value="{{ $modo == 'editar'? $categoria->descripcion : ''}}"
+                        >
                     </div>
                     <button type="submit" class="btn btn-primary mb-4 text-center">Crear</button>
                     <a href="{{ url('/categorias') }}" class="btn btn-secondary mb-4 text-center">Cancelar</a>

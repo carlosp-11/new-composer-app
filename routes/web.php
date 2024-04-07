@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\AlmacenesController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\APIController;
 use Illuminate\Http\Request;
 
 
@@ -22,8 +23,8 @@ use Illuminate\Http\Request;
 */
 
 //Ruta de Home
-//Route::get('/', [MainController::class, 'index']);
-Route::get('/', [UserController::class, 'index'])->name('login');
+Route::get('/', [MainController::class, 'index']);
+//Route::get('/', [UserController::class, 'index'])->name('login');
 
 //Rutas de Productos
 Route::get('/productos', [ProductosController::class, 'index'])->middleware(['web', 'auth']);;
@@ -67,3 +68,6 @@ Route::get('/private', [UserController::class, 'show'])->middleware('auth');
 //Route::post('/private', [UserController::class, ''])->middleware('auth');
 Route::post('/private', [UserController::class, 'sendWelcomeEmail'])->name('enviar-bienvenida');
 Route::delete('/private', [UserController::class, 'destroy'])->middleware('auth');
+
+Route::get('/getQRCode', [APIController::class, 'getQRCode']);
+Route::get('/images/{id}', [APIController::class, 'showImage']);

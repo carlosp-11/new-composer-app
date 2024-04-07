@@ -3,8 +3,8 @@
 @section('title', $modo == 'crear' ? 'CREAR UN PRODUCTO' : 'EDITAR UN PRODUCTO')
 
 @section('content')
-<div class="align-self-center mx-auto">
-    <div class="card mb-3 px-0 align-self-center mx-5" style="max-width: 600px;">
+<div class="align-self-center mx-auto pt-5 mt-5">
+    <div class="card mb-3 px-0 mx-auto align-self-center animated fadeInDown" style="max-width: 600px;">
         <div class="row g-0 mx-0 p-0">
             <div class="card-header">
                 <h1 class="text-center text-secondary fw-light"> 
@@ -12,51 +12,75 @@
                 </h1>
             </div>
             <div class="card-body">
-                <form action="{{ $modo == 'crear' ? url('/crear-producto') : url('/productos/'.$producto->id).'/editar' }}" 
-                method="POST" class="py-3 px-3" id="formulario">
+                <form action="{{ $modo == 'crear' ? url('/crear-producto') : 
+                    url('/productos/'.$producto->id).'/editar' }}" 
+                    method="POST" class="py-3 px-3" id="formulario"
+                >
                     @csrf
                     @if($modo == 'editar')
                         @method('PUT')
                     @endif
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Escriba el nombre del producto" value="{{ $modo == 'editar' ? $producto->nombre : '' }}">
+                        <input type="text" class="form-control" id="nombre" 
+                            name="nombre" placeholder="Escriba el nombre del producto" 
+                            value="{{ $modo == 'editar' ? $producto->nombre : '' }}"
+                        >
                     </div>
                     <div class="mb-3">
                         <label for="precio" class="form-label">Precio</label>
-                        <input type="number" class="form-control" id="precio" name="precio" placeholder="Escriba el importe" step="0.01" value="{{ $modo == 'editar' ? $producto->precio : '' }}">
+                        <input type="number" class="form-control" id="precio" 
+                            name="precio" placeholder="Escriba el importe" step="0.01" 
+                            value="{{ $modo == 'editar' ? $producto->precio : '' }}"
+                        >
                     </div>
                     <div class="mb-3">
                         <label for="almacen" class="form-label">Almacen</label>
                         <select id="almacen" class="form-select" name="almacen" form="formulario">
                             @foreach ($almacenes as $option)
-                            <option value="{{ $option->id }}" {{ $modo == 'editar' ? $producto->almacen == $option->id ? 'selected' : '' :  '' }}>
+                            <option value="{{ $option->id }}" 
+                                {{ $modo == 'editar' ? $producto->almacen == $option->id ? 
+                                    'selected' : '' :  '' 
+                                }}
+                            >
                                 {{ $option->nombre }}
                             </option>
                             @endforeach
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="observaciones" class="form-label">Observaciones</label>
-                        <textarea type="text" class="form-control" id="observaciones" rows="2" name="observaciones" placeholder="Escriba las observaciones" >
-                            {{ $modo == 'editar' ?$producto->observaciones: ''}}
-                        </textarea>
+                        <label for="descripcion" class="form-label">Descripción</label>
+                        <input type="text" class="form-control" id="descripcion" 
+                            name="descripcion" placeholder="Escriba una descripción" 
+                            value="{{ $modo == 'editar' ? $producto->descripcion : '' }}"
+                        >
                     </div>
                     <div class="mb-3">
                         @foreach ($categorias as $categoria)
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="{{ $categoria->nombre }}" name="categorias[]"  value="{{ $categoria->id }}"
-                                @if($modo == 'editar')
-                                    {{ $productosCategorias->where('id_producto', $producto->id)->where('id_categoria', $categoria->id)->isNotEmpty() ? 'checked' : '' }}
-                                @endif
+                                <input class="form-check-input" type="checkbox" 
+                                    id="{{ $categoria->nombre }}" name="categorias[]"  
+                                    value="{{ $categoria->id }}"
+                                    @if($modo == 'editar')
+                                        {{ $productosCategorias->where('id_producto', 
+                                            $producto->id)->where('id_categoria', 
+                                            $categoria->id)->isNotEmpty() ? 'checked' : '' 
+                                        }}
+                                    @endif
                                 >
-                                <label class="form-check-label" for="{{ $categoria->nombre }}">{{ $categoria->nombre }}</label>
+                                <label class="form-check-label" for="{{ $categoria->nombre }}">
+                                    {{ $categoria->nombre }}
+                                </label>
                             </div>
                         @endforeach
                     </div>
                     <div class="card-footer bg-white mb-4 px-0 mx-0">
-                        <button type="submit" class="btn btn-primary w-25 text-center">{{$modo == 'crear' ? 'Crear' : 'Editar'}}</button>
-                        <a href="{{ url('/productos') }}" class="btn btn-secondary text-center">Cancelar</a>
+                        <button type="submit" class="btn btn-primary w-25 text-center">
+                            {{$modo == 'crear' ? 'Crear' : 'Editar'}}
+                        </button>
+                        <a href="{{ url('/productos') }}" class="btn btn-secondary text-center">
+                            Cancelar
+                        </a>
                     </div>
                 </form>
             </div>

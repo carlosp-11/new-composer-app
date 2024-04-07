@@ -1,56 +1,29 @@
-<!-- @extends('layouts.home')
+@extends('layouts.main')
 
 @section('title', 'Home')
 
 @section('content') 
--->
-    <div class="mx-0 px-0 pt-5  bg-primary" style="height: 92vh;">
-        <div style="height: 5vh;"></div>
-        <div class="row bg-primary mt-5 mx-4" >
-            <div class="col text-center" >
-                <h1 class="fw-bolder text-light" style="font-size: 20vw;" id="letraC"> C </h1>
+    <div class="pt-5 mt-5 px-0 mx-0">           
+        <div class="row m-0">
+            <div class="pt-5 col-12 col-sm-6 justify-content-center text-center align-self-center">
+                <a class="animated fadeIn text-decoration-none" href="/almacenes">  
+                    <img src="{{ asset('img/centro-de-distribucion.png') }}" 
+                        class="img-thumbnail rounded border-secondary" 
+                        alt="gestionar almacén" style="max-height:12rem"
+                    >
+                    <h4 class="text-secondary fw-lighter"> Gestionar Almacenes </h4>
+                </a>
             </div>
-            <div class="col text-center">
-                <h1 class="fw-bolder text-light" style="font-size: 20vw;" id="letraR"> R </h1>
+            <div class="pt-5 col-12 col-sm-6 justify-content-center text-center align-self-center">     
+                <a class="animated fadeIn text-decoration-none" href="/productos"> 
+                    <img src="{{ asset('img/gestion_prod.png') }}" 
+                        class="m-0 img-thumbnail rounded border-secondary" 
+                        alt="gestionar un producto" style="max-height:12rem"
+                    >
+                    <h4 class="text-secondary fw-lighter"> Gestionar Productos </h4>
+                </a>
             </div>
-            <div class="col text-center">
-                <h1 class="fw-bolder text-light" style="font-size: 20vw;" id="letraU"> U </h1>
-            </div>
-            <div class="col text-center">
-                <h1 class="fw-bolder text-light" style="font-size: 20vw;" id="letraD"> D </h1>
-            </div>        
         </div>
-        
-        <div class="row bg-primary mx-4 mb-5"  style="height: 10vh;">
-            <div class="col text-center mb-5">
-                <h1 class="fw-bolder text-light"  style="font-size: 5vw;" id="create" > Create </h1>
-            </div>
-            <div class="col text-center mb-5">
-                <h1 class="fw-bolder text-light"  style="font-size: 5vw;" id="read"> Read </h1>
-            </div>
-            <div class="col text-center mb-5">
-                <h1 class="fw-bolder text-light"  style="font-size: 5vw;" id="update"> Update </h1>
-            </div>
-            <div class="col text-center mb-5">
-                <h1 class="fw-bolder text-light"  style="font-size: 5vw;" id="delete"> Delete </h1>
-            </div>        
-        </div>
-        
-        <div class="row bg-light px-0 mx-5 py-4 mb-5">
-            <div class="col text-center">
-            <i class="fa-solid fa-circle-plus text-primary fs-1"></i>
-            </div>
-            <div class="col text-center">
-            <i class="fa-solid fa-eye text-primary fs-1"></i>
-            </div>
-            <div class="col text-center">
-            <i class="fa-solid fa-pen text-primary fs-1"></i>
-            </div>
-            <div class="col text-center">
-            <i class="fa-solid fa-trash-can text-primary fs-1"></i>
-            </div>        
-        </div>
-    </div>   
-    <!--
+    </div>
 @endsection
--->
+

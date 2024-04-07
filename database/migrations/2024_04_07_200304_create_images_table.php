@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('almacenes', function (Blueprint $table) {
+        Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre', 50);
-            $table->string('descripcion', 200);
-            $table->integer('slots')->nullable(false)->default(1);
-            //$table->integer('slots')->unsigned()->nullable(false)->default(1)->change();
+            $table->string('nombre');
+            $table->string('public_id')->nullable();
+            $table->string('url');
+            $table->timestamps();
         });
     }
 
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('almacenes');
+        Schema::dropIfExists('images');
     }
 };

@@ -32,6 +32,8 @@ class AlmacenesController extends Controller
         try {
             $nuevoAlmacen = new Almacenes([
                 'nombre' => $request->nombre,
+                'descripcion' => $request->descripcion,
+                'slots' => $request->slots,
                 'id_user' => $userId,
             ]);
             $nuevoAlmacen->save();            

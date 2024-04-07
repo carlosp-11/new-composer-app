@@ -6,10 +6,13 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
         <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
         <title>CRUD APP - @yield('title')</title>
     </head>
-    <body> 
-        <div class="container-fluid d-flex p-0 py-5 m-0 bg-secondary bg-opacity-25" style="min-height: 100vh;">           
+    <body class="" style="background-image: url('/img/boxes_patern.jpg');
+        background-repeat:repeat; background-size: 600px;"
+    >
+        <div class="container-fluid p-0 py-5 m-0">           
             {{-- Include Navbar --}}
             @include('panels.navbar')
             
