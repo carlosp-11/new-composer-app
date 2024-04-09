@@ -28,7 +28,9 @@ class ProductosController extends Controller
         $categorias = Categorias::where('id_user', $userId)->get();            
         $almacenes = Almacenes::where('id_user', $userId)->get();
         $productosCategorias = Productos_has_categorias::all();
-        $productos = Productos::where('id_user', $userId)->paginate(10);
+        $productos = Productos::where('id_user', $userId)
+                                ->orderBy('nombre', 'asc')
+                                ->paginate(12);
         return view('pages.productos.pizarra', compact(
             'productos', 
             'categorias', 'almacenes', 'productosCategorias')); 
@@ -89,30 +91,46 @@ class ProductosController extends Controller
     {
         $filtro = $request->input('filtro');
         $userId = auth()->id();
+        if($request->filtro !== null){
         if ($request->filtro === 'categoria'){
             if($request->termino != 'null'){
                 $idProductos = Productos_has_categorias::where('id_categoria', $request->termino)
                 ->pluck('id_producto');
-                $productos = Productos::whereIn('id', $idProductos)->paginate(10);
+                $productos = Productos::whereIn('id', $idProductos)
+                                        ->orderBy('nombre', 'asc')
+                                        ->paginate(12);
             }
             if ($request->termino == 'null') {
                 $idProductos = Productos_has_categorias::pluck('id_producto');
-                $productos = Productos::whereNotIn('id', $idProductos)->paginate(10);
+                $productos = Productos::whereNotIn('id', $idProductos)
+                                        ->orderBy('nombre', 'asc')
+                                        ->paginate(12);
             }
             
         }
         if ($request->filtro === 'almacen'){             
              if($request->termino != 'null'){
-                $productos = $request->filtro == 'almacen'? Productos::where('almacen', $request->termino)->paginate(10) : '' ;
+                $productos = $request->filtro == 'almacen'? Productos::where('almacen', $request->termino) 
+                                                                        ->orderBy('nombre', 'asc')
+                                                                        ->paginate(12) : '' ;
              }
              if($request->termino == 'null'){
-                $productos = $request->filtro == 'almacen' ? Productos::whereNull('almacen')->paginate(10) : '';
+                $productos = $request->filtro == 'almacen' ? Productos::whereNull('almacen') 
+                                                                        ->orderBy('nombre', 'asc')
+                                                                        ->paginate(12) : '';
              }
+        }
+        } else {
+            $productos = Productos::where('nombre', 'like', '%' . $request->termino . '%') 
+                                    ->orderBy('nombre', 'asc')
+                                    ->paginate(12);
         }
         $filtro = $request->input('filtro');
         $categorias = Categorias::where('id_user', $userId)->get();            
         $almacenes = Almacenes::where('id_user', $userId)->get();
         $productosCategorias = Productos_has_categorias::all();
+        
+        
         $productosHtml = view('panels.productTable')
         ->with('productos', $productos)
         ->with('categorias', $categorias)
@@ -123,8 +141,8 @@ class ProductosController extends Controller
       
         
         $productosPaginationHtml = view('panels.productPagination')
-    ->with('productos', $productos)
-    ->render();
+        ->with('productos', $productos)
+        ->render();
     
         return response()->json([
             'productosHtml' => $productosHtml,
@@ -142,6 +160,36 @@ class ProductosController extends Controller
       //  'productosHtml' => view('pages.productos.pizarra', compact('productos', 'almacenes', 'categorias', 'productosCategorias'))->render()
     //]);
     //return view('pages.productos.pizarra', compact('productos', 'almacenes', 'categorias', 'productosCategorias'));
+    }
+
+    public function display (Request $request) 
+    {
+            $userId = auth()->id();
+            $productos = Productos::where('nombre', 'like', '%' . $request->q . '%') 
+                                    ->orderBy('nombre', 'asc')
+                                    ->paginate(12);
+            $categorias = Categorias::where('id_user', $userId)->get();            
+            $almacenes = Almacenes::where('id_user', $userId)->get();
+            $productosCategorias = Productos_has_categorias::all();
+            $productosHtml = view('panels.productTable')
+            ->with('productos', $productos)
+            ->with('categorias', $categorias)
+            ->with('almacenes', $almacenes)
+            ->with('productosCategorias', $productosCategorias)
+            ->render();
+    
+          
+            
+            $productosPaginationHtml = view('panels.productPagination')
+        ->with('productos', $productos)
+        ->render();
+        
+            return response()->json([
+                'productosHtml' => $productosHtml,
+                'productos' => $productos,
+                'productosPaginationHtml' => $productosPaginationHtml,
+            ]);
+    
     }
 
     public function edit(string $id)

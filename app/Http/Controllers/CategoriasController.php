@@ -12,7 +12,10 @@ class CategoriasController extends Controller
     public function index()
     {
         $userId = auth()->id();
-        $categorias = Categorias::where('id_user', $userId)->paginate(10);       
+        $categorias = Categorias::where('id_user', $userId)
+                                ->orderBy('nombre', 'asc')
+                                ->paginate(12);
+                                
         return view('pages.categorias.pizarra', compact('categorias')); 
     }
 

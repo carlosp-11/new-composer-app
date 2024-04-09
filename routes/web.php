@@ -29,12 +29,11 @@ Route::get('/', [MainController::class, 'index']);
 //Rutas de Productos
 Route::get('/productos', [ProductosController::class, 'index'])->middleware(['web', 'auth']);;
 Route::post('/productos', [ProductosController::class, 'show'])->middleware('auth');;
-//Route::post('/productos', [ProductosController::class, 'show']);
-//Route::post('/filtrar/productos/{filtro}', [ProductosController::class, 'show'])->middleware('auth');;
 Route::get('/crear-producto', [ProductosController::class, 'create'])->middleware('auth');;
 Route::post('/crear-producto', [ProductosController::class, 'store'])->middleware('auth');;
 Route::get('productos/{id}/editar', [ProductosController::class, 'edit'])->middleware('auth');;
 Route::put('productos/{id}/editar', [ProductosController::class, 'update'])->middleware('auth');;
+//Route::get('productos/{id}', [ProductosController::class, 'display'])->middleware('auth');;
 Route::delete('productos/{id}', [ProductosController::class, 'destroy'])->middleware('auth');;
 
 //Rutas de Almacenes
@@ -71,3 +70,7 @@ Route::delete('/private', [UserController::class, 'destroy'])->middleware('auth'
 
 Route::get('/getQRCode', [APIController::class, 'getQRCode']);
 Route::get('/images/{id}', [APIController::class, 'showImage']);
+
+Route::get('/qrscanner', function () {
+    return view('pages.qrscanner.qrscanner');
+});

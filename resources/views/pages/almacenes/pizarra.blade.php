@@ -5,17 +5,16 @@
 @section('content')
 
     <div class="pt-5 mt-3 px-0">
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 m-0 p-0">
+        <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4 m-0 p-0">
             @foreach ($almacenes as $row)             
-            <div class="col">
-                <div class="card mx-auto animated fadeIn" >
+            <div class="col ms-auto me-auto">
+                <div class="card mx-auto animated fadeInUp bg-light shadow" style="min-width:15rem">
                     <a class="bg-secondary bg-opacity-50 text-center rounded-top border border-light" 
                         href="#"
                     > 
                         <img src="{{ asset('img/warehouse.webp') }}" class="card-img-top " 
-                            alt="Almacen"
-                            style="width: 18rem;" 
-                        >
+                            alt="Almacen" style="width: 15rem;" 
+                        />
                     </a>
                     <div class="card-body">
                         <a class="text-decoration-none" href="#"> 
@@ -32,7 +31,7 @@
                                 <i class="fa-solid fa-pen text-secondary fs-4"></i>
                             </a> 
                             <div class="col-6 text-center">
-                                <button type="button" class="btn text-center" data-bs-toggle="modal" 
+                                <button type="button" class="btn text-center" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal"
                                 >
                                     <i class="fa-solid fa-trash-can text-secondary fs-4"></i>
@@ -69,9 +68,9 @@
                             <form method="POST" action= "{{url('almacenes/'. $row->id)}}" >
                             @csrf
                             @method('DELETE') 
-                            <button type="submit" class="btn btn-danger">
-                                Borrar
-                            </button>
+                                <button type="submit" class="btn btn-danger">
+                                    Borrar
+                                </button>
                             </form>
                         </div>
                     </div>

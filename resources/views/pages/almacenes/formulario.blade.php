@@ -3,8 +3,8 @@
 @section('title', $modo == 'crear' ? 'CREAR UN ALMACEN' : 'EDITAR UN ALMACEN')
 
 @section('content')
-    <div class="pt-5 mt-5 justify-content-center">
-        <div class="card mb-3 px-0 mx-auto animated fadeInDown" style="max-width: 600px;">
+    <div class="pt-5 mt-5 px-3 justify-content-center">
+        <div class="card mb-3 px-0 mx-auto animated fadeInDown shadow" style="max-width: 600px;">
             <div class="row g-0 mx-0 p-0">
                 <div class="card-header">
                     <h1 class="text-center text-secondary fw-light"> 

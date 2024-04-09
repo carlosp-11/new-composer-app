@@ -28,4 +28,6 @@
     {{-- include default scripts --}}
     <script type="text/javascript" src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('js/closing-alerts.js') }}"></script>
+
 </html>

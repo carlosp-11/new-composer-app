@@ -3,26 +3,86 @@
 @section('title', 'Home')
 
 @section('content') 
-    <div class="pt-5 mt-5 px-0 mx-0">           
-        <div class="row m-0">
-            <div class="pt-5 col-12 col-sm-6 justify-content-center text-center align-self-center">
-                <a class="animated fadeIn text-decoration-none" href="/almacenes">  
-                    <img src="{{ asset('img/centro-de-distribucion.png') }}" 
-                        class="img-thumbnail rounded border-secondary" 
-                        alt="gestionar almacén" style="max-height:12rem"
-                    >
-                    <h4 class="text-secondary fw-lighter"> Gestionar Almacenes </h4>
-                </a>
+    <div class="mt-5 px-0 mx-0">           
+        <div class="row m-0 p-0 g-5 ">
+            <div class="col-md-6 col-xl-4">
+                <div class = "card border-dark mb-3 bg-primary shadow mx-auto animated fadeIn px-2 py-3" 
+                    style = "width:22rem"
+                >
+                    <a class=" text-decoration-none " href="/almacenes">
+                        <div class="row g-0 align-items-center">
+                            <div class="col-5 text-center">
+                                <h4 class="text-white fw-light text-nowrap "> ALMACENES </h4>
+                            </div>
+                            <div class="col-7 justify-content-center text-center">
+                                <img src="{{ asset('img/centro-de-distribucion.png') }}" 
+                                    class="bg-primary" 
+                                    alt="gestionar almacén" style="max-height:12rem"
+                                >
+                            </div>
+                        </div>
+                    </a>    
+                </div>
             </div>
-            <div class="pt-5 col-12 col-sm-6 justify-content-center text-center align-self-center">     
-                <a class="animated fadeIn text-decoration-none" href="/productos"> 
-                    <img src="{{ asset('img/gestion_prod.png') }}" 
-                        class="m-0 img-thumbnail rounded border-secondary" 
-                        alt="gestionar un producto" style="max-height:12rem"
-                    >
-                    <h4 class="text-secondary fw-lighter"> Gestionar Productos </h4>
-                </a>
+
+            <div class="col-md-6 col-xl-4">
+                <div class="card border-dark mb-3 bg-primary shadow mx-auto animated fadeIn px-2 py-3"  
+                    style= "width:22rem"
+                >
+                    <a class=" text-decoration-none " href="/categorias">
+                        <div class="row g-0 align-items-center">
+                            <div class="col-5 text-center">
+                                <h4 class="text-white fw-light text-nowrap"> Categorías </h4>
+                            </div>
+                            <div class="col-7 justify-content-center text-center">
+                                <img src="{{ asset('img/categories.webp') }}" 
+                                    class="bg-primary" 
+                                    alt="gestionar almacén" style="max-height:12rem"
+                                >
+                            </div>
+                        </div>
+                    </a>    
+                </div>
             </div>
+
+            <div class="col-md-6 col-xl-4">
+                <div class="card border-dark mb-3 bg-primary shadow mx-auto animated fadeIn px-2 py-3"  
+                    style= "width:22rem"
+                >
+                    <a class=" text-decoration-none " href="/productos">
+                        <div class="row g-0 align-items-center">
+                            <div class="col-5 text-center">
+                                <h4 class="text-white fw-light text-nowrap"> Productos </h4>
+                            </div>
+                            <div class="col-7 justify-content-center text-center">
+                                <img src="{{ asset('img/boxes.png') }}" 
+                                    class="bg-primary" 
+                                    alt="gestionar almacén" style="max-height:12rem"
+                                >
+                            </div>
+                        </div>
+                    </a>    
+                </div>
+            </div>
+
+            <div class="col-md-6 col-xl-4">
+                <div class="card border-dark mb-3 bg-primary shadow mx-auto animated fadeIn px-2 py-3"  
+                    style= "width:22rem"
+                >
+                    <a class=" text-decoration-none " href="/qrscanner">
+                        <div class="row g-0 align-items-center">
+                            <div class="col-5 text-center">
+                                <h4 class="text-white fw-light text-nowrap"> Escanear QR </h4>
+                            </div>
+                            <div class="col-7 justify-content-center text-center">
+                                <img src="{{ asset('img/qr-code.png') }}" 
+                                    class="bg-primary" 
+                                    alt="gestionar almacén" style="max-height:12rem"
+                                >
+                            </div>
+                        </div>
+                    </a>    
+                </div>
         </div>
     </div>
 @endsection

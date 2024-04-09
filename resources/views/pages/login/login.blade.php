@@ -4,25 +4,25 @@
 
 @section('content')
 <div class="m-0 p-0 animated fadeInDown">
-    <div class="row  m-0 px-5 ">
-        <div class= "pt-5 mt-5 col-12 col-lg-6">
-            <div class="d-flex justify-content-center ">
-                <div class="">
-                    <img class="rotating-image mx-4" 
+    <div class="row mt-5 mx-0 align-items-center gx-4 gy-5">
+        <div class= " col-12 col-lg-6">
+            <div class="row gx-3 justify-content-center">
+                <div class="col-auto align-self-center">
+                    <img class="rotating-image " 
                         src="{{ asset('img/cd_icon.png') }}" alt="C"
-                        style="max-width: 25rem;"   
+                        style="max-width: 5rem; height: auto;"   
                     >
                 </div>
-                <div class="">
+                <div class="col-auto align-self-center">
                     <img class="img-fluid" 
                         src="{{ asset('img/depot_letter.png') }}" alt="DEPOT"
-                        style="max-width: 20rem;"
+                        style="max-width: 18rem;"
                     >
                 </div>
             </div>
         </div>
-        <div class="col-12 col-lg-6 px-5 mt-5">
-            <div class="row justify-content-center mt-5">           
+        <div class="col-12 col-lg-6 ">
+            <div class="row justify-content-center px-3 mt-5">           
                 <div class="shadow card mb-3" style="max-width: 600px;">
                     <div class="row g-0">
                         <div class="col ">
