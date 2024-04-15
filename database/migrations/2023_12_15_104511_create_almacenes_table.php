@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('almacenes', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 50);
+            $table->string('descripcion', 200);
+            $table->integer('slots')->nullable(false)->default(1);
+            //$table->integer('slots')->unsigned()->nullable(false)->default(1)->change();
         });
     }
 

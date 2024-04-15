@@ -1,5 +1,5 @@
 
-    <div class="my-5 mx-auto">
+    <div class="my-5 mx-auto animated fadeInDown">
         <nav class="py-5  mx-auto" aria-label="Page navigation example" id="pagination-container">
             <ul class="pagination justify-content-center">
                 <li class="page-item {{ $productos->onFirstPage() ? 'disabled' : '' }}">

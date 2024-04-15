@@ -1,56 +1,93 @@
-<!-- @extends('layouts.home')
+@extends('layouts.main')
 
 @section('title', 'Home')
 
 @section('content') 
--->
-    <div class="mx-0 px-0 pt-5  bg-primary" style="height: 92vh;">
-        <div style="height: 5vh;"></div>
-        <div class="row bg-primary mt-5 mx-4" >
-            <div class="col text-center" >
-                <h1 class="fw-bolder text-light" style="font-size: 20vw;" id="letraC"> C </h1>
+    <div class="mt-5 px-0 mx-0">           
+        <div class="row m-0 p-0 g-5 ">
+            <div class="col-md-6">
+                <div class = "card border-dark mb-3 bg-primary bg-gradient 
+                    shadow mx-auto animated fadeIn px-2 py-3" 
+                    style = "width:22rem"
+                >
+                    <a class=" text-decoration-none " href="/almacenes">
+                        <div class="row g-0 align-items-center">
+                            <div class="col-7 justify-content-center text-center">
+                                <img src="{{ asset('img/centro-de-distribucion.png') }}" 
+                                    class="bg-primary bg-gradient" 
+                                    alt="gestionar almacén" style="max-height:12rem"
+                                >
+                            </div>
+                            <div class="col-5 text-center">
+                                <h4 class="text-white fw-light text-nowrap "> Almacenes </h4>
+                            </div>
+                        </div>
+                    </a>    
+                </div>
             </div>
-            <div class="col text-center">
-                <h1 class="fw-bolder text-light" style="font-size: 20vw;" id="letraR"> R </h1>
+
+            <div class="col-md-6 ">
+                <div class="card border-dark mb-3 bg-primary bg-gradient 
+                    shadow mx-auto animated fadeIn px-2 py-3"  
+                    style= "width:22rem"
+                >
+                    <a class=" text-decoration-none " href="/categorias">
+                        <div class="row g-0 align-items-center">
+                            <div class="col-7 justify-content-center text-center">
+                                <img src="{{ asset('img/categories.webp') }}" 
+                                    class="bg-primary bg-gradient" 
+                                    alt="gestionar almacén" style="max-height:12rem"
+                                >
+                            </div>
+                            <div class="col-5 text-center">
+                                <h4 class="text-white fw-light text-nowrap"> Categorías </h4>
+                            </div>
+                        </div>
+                    </a>    
+                </div>
             </div>
-            <div class="col text-center">
-                <h1 class="fw-bolder text-light" style="font-size: 20vw;" id="letraU"> U </h1>
+
+            <div class="col-md-6 ">
+                <div class="card border-dark mb-3 bg-primary bg-gradient shadow mx-auto 
+                    animated fadeIn px-2 py-3"  
+                    style= "width:22rem"
+                >
+                    <a class=" text-decoration-none " href="/productos">
+                        <div class="row g-0 align-items-center">
+                            <div class="col-7 justify-content-center text-center">
+                                <img src="{{ asset('img/boxes.png') }}" 
+                                    class="bg-primary bg-gradient" 
+                                    alt="gestionar almacén" style="max-height:12rem"
+                                >
+                            </div>
+                            <div class="col-5 text-center">
+                                <h4 class="text-white fw-light text-nowrap"> Productos </h4>
+                            </div>
+                        </div>
+                    </a>    
+                </div>
             </div>
-            <div class="col text-center">
-                <h1 class="fw-bolder text-light" style="font-size: 20vw;" id="letraD"> D </h1>
-            </div>        
+
+            <div class="col-md-6 ">
+                <div class="card border-dark mb-3 bg-primary bg-gradient shadow mx-auto 
+                    animated fadeIn px-2 py-3"  
+                    style= "width:22rem"
+                >
+                    <a class=" text-decoration-none " href="/qrscanner">
+                        <div class="row g-0 align-items-center">
+                            <div class="col-7 justify-content-center text-center">
+                                <img src="{{ asset('img/qr-code.png') }}" 
+                                    class="bg-primary bg-gradient" 
+                                    alt="gestionar almacén" style="max-height:12rem"
+                                >
+                            </div>
+                            <div class="col-5 text-center">
+                                <h4 class="text-white fw-light text-nowrap"> Escanear QR </h4>
+                            </div>
+                        </div>
+                    </a>    
+                </div>
         </div>
-        
-        <div class="row bg-primary mx-4 mb-5"  style="height: 10vh;">
-            <div class="col text-center mb-5">
-                <h1 class="fw-bolder text-light"  style="font-size: 5vw;" id="create" > Create </h1>
-            </div>
-            <div class="col text-center mb-5">
-                <h1 class="fw-bolder text-light"  style="font-size: 5vw;" id="read"> Read </h1>
-            </div>
-            <div class="col text-center mb-5">
-                <h1 class="fw-bolder text-light"  style="font-size: 5vw;" id="update"> Update </h1>
-            </div>
-            <div class="col text-center mb-5">
-                <h1 class="fw-bolder text-light"  style="font-size: 5vw;" id="delete"> Delete </h1>
-            </div>        
-        </div>
-        
-        <div class="row bg-light px-0 mx-5 py-4 mb-5">
-            <div class="col text-center">
-            <i class="fa-solid fa-circle-plus text-primary fs-1"></i>
-            </div>
-            <div class="col text-center">
-            <i class="fa-solid fa-eye text-primary fs-1"></i>
-            </div>
-            <div class="col text-center">
-            <i class="fa-solid fa-pen text-primary fs-1"></i>
-            </div>
-            <div class="col text-center">
-            <i class="fa-solid fa-trash-can text-primary fs-1"></i>
-            </div>        
-        </div>
-    </div>   
-    <!--
+    </div>
 @endsection
--->
+

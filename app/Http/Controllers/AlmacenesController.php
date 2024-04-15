@@ -11,7 +11,9 @@ class AlmacenesController extends Controller
     public function index()
     {
         $userId = auth()->id();
-        $almacenes = Almacenes::where('id_user', $userId)->paginate(10);
+        $almacenes = Almacenes::where('id_user', $userId)
+                              ->orderBy('nombre', 'asc')
+                              ->paginate(12);
         return view('pages.almacenes.pizarra', compact('almacenes'));
     }
    
@@ -32,6 +34,8 @@ class AlmacenesController extends Controller
         try {
             $nuevoAlmacen = new Almacenes([
                 'nombre' => $request->nombre,
+                'descripcion' => $request->descripcion,
+                'slots' => $request->slots,
                 'id_user' => $userId,
             ]);
             $nuevoAlmacen->save();            

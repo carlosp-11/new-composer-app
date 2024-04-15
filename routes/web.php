@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\AlmacenesController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\APIController;
 use Illuminate\Http\Request;
 
 
@@ -22,18 +23,19 @@ use Illuminate\Http\Request;
 */
 
 //Ruta de Home
-//Route::get('/', [MainController::class, 'index']);
-Route::get('/', [UserController::class, 'index'])->name('login');
+Route::get('/', [MainController::class, 'index']);
+//Route::get('/', [UserController::class, 'index'])->name('login');
 
 //Rutas de Productos
 Route::get('/productos', [ProductosController::class, 'index'])->middleware(['web', 'auth']);;
 Route::post('/productos', [ProductosController::class, 'show'])->middleware('auth');;
-//Route::post('/productos', [ProductosController::class, 'show']);
-//Route::post('/filtrar/productos/{filtro}', [ProductosController::class, 'show'])->middleware('auth');;
 Route::get('/crear-producto', [ProductosController::class, 'create'])->middleware('auth');;
 Route::post('/crear-producto', [ProductosController::class, 'store'])->middleware('auth');;
+Route::get('productos/{id}', [ProductosController::class, 'detail'])->middleware('auth');;
+Route::post('productos/{id}', [ProductosController::class, 'updateStatus'])->middleware('auth');;
 Route::get('productos/{id}/editar', [ProductosController::class, 'edit'])->middleware('auth');;
 Route::put('productos/{id}/editar', [ProductosController::class, 'update'])->middleware('auth');;
+//Route::get('productos/{id}', [ProductosController::class, 'display'])->middleware('auth');;
 Route::delete('productos/{id}', [ProductosController::class, 'destroy'])->middleware('auth');;
 
 //Rutas de Almacenes
@@ -65,4 +67,12 @@ Route::get('/forgot-password', function () {
 //Routas de Área Personal
 Route::get('/private', [UserController::class, 'show'])->middleware('auth');
 //Route::post('/private', [UserController::class, ''])->middleware('auth');
+Route::post('/private', [UserController::class, 'sendWelcomeEmail'])->name('enviar-bienvenida');
 Route::delete('/private', [UserController::class, 'destroy'])->middleware('auth');
+
+Route::get('/getQRCode', [APIController::class, 'getQRCode']);
+Route::get('/images/{id}', [APIController::class, 'showImage']);
+
+Route::get('/qrscanner', function () {
+    return view('pages.qrscanner.qrscanner');
+});

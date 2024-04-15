@@ -13,11 +13,19 @@ return new class extends Migration
     {
         Schema::create('productos', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre', 150);
+            $table->string('QR', 10)->unique()->nullable();
+            $table->string('nombre', 50);
             $table->float('precio', 8, 2);
-            $table->string('observaciones', 500);
+            $table->string('descripcion', 200);
             //$table->foreignId('almacen')->constrained('almacenes')->onUpdate('cascade')->onDelete('cascade');
         });
+
+        $productos = DB::table('productos')->get();
+        foreach ($productos as $producto) {
+            DB::table('productos')
+                ->where('id', $producto->id)
+                ->update(['QR' => Str::random(10)]);
+        }
         
     }
 
