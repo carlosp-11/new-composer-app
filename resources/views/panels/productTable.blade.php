@@ -4,15 +4,17 @@
             <div class="col-12 col-md-4 col-lg-3 ms-auto me-auto">            
                 <div class="card mx-auto animated fadeInUp bg-light shadow" style="min-width:15rem">
                     <a class="bg-secondary bg-opacity-50 text-center rounded-top border border-light" 
-                        href="#"
+                        href="{{ url('productos/'. $row->id) }}"
                     > 
                         <img src="{{ asset('img/pack.png') }}" class="img-fluid rounded-start" 
                             alt="Producto" style="width: 15rem;" 
                         >
                     </a>
                     <div class="card-body">
-                        <span class="row justifiy-content-between"> 
-                            <h5 class="card-title col"> {{ $row->nombre }} </h5> 
+                        <span class="row justifiy-content-between">
+                            <a class="text-decoration-none" href="{{ url('productos/'. $row->id) }}"> 
+                                <h5 class="card-title col"> {{ $row->nombre }} </h5> 
+                            </a>
                             <h6 class="col text-secondary text-end">
                                 {{ number_format($row->precio, 2, ',', '.') }} €  
                             </h6> 
@@ -79,7 +81,7 @@
                             </p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" 
+                            <button type="button" class="btn btn-secondary bg-gradient" 
                                 data-bs-dismiss="modal"
                             >
                                 Cancelar
@@ -87,7 +89,7 @@
                             <form method="POST" action= "{{url('productos/'.$row->id)}}">
                             @csrf
                             @method('DELETE') 
-                                <button type="submit" class="btn btn-danger">
+                                <button type="submit" class="btn btn-danger bg-gradient">
                                     Borrar
                                 </button>
                             </form>

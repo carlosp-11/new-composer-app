@@ -14,11 +14,6 @@
         </a>
         <ul class="dropdown-menu dropdown-menu-end bg-light">
             <div>
-                <a class="dropdown-item" href="/private">
-                    Área Personal
-                </a>
-            </div>
-            <div>
                 <button type="button" class="btn dropdown-item" data-bs-toggle="modal" 
                     data-bs-target="#sessionModal"
                 >

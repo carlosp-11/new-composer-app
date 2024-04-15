@@ -1,5 +1,5 @@
 @if (session('success'))
-    <div class="alert alert-success px-0 mx-0 alert-dismissible fade show z-3 position-absolute w-100" 
+    <div class="alert alert-success c px-0 mx-0 alert-dismissible fade show z-3 position-absolute w-100 animated fadeInLeft" 
         role="alert" id="miAlerta"
     >
         {{ session('success') }}
@@ -7,7 +7,7 @@
     </div>
 @endif
 @if ($errors->any())
-    <div class="alert alert-danger px-0 mx-0 alert-dismissible fade show z-3 position-absolute w-100" 
+    <div class="alert alert-danger mt-3 px-0 mx-0 alert-dismissible fade show z-3 position-absolute w-100 animated fadeInLeft" 
         role="alert" id="miAlerta"
     >
       <ul>
@@ -19,7 +19,7 @@
     </div>
 @endif
 @if (session('error'))
-  <div class="alert alert-danger px-0 mx-0 alert-dismissible fade show z-3 position-absolute w-100" 
+  <div class="alert alert-danger  mt-3 px-0 mx-0 alert-dismissible fade show z-3 position-absolute w-100 animated fadeInLeft" 
     role="alert" id="miAlerta"
   >
     {{ session('error') }}

@@ -29,8 +29,8 @@
                             placeholder="Escriba una descripción" value="{{ $modo == 'editar'? $categoria->descripcion : ''}}"
                         >
                     </div>
-                    <button type="submit" class="btn btn-primary mb-4 text-center">Crear</button>
-                    <a href="{{ url('/categorias') }}" class="btn btn-secondary mb-4 text-center">Cancelar</a>
+                    <button type="submit" class="btn btn-primary mb-4 text-center bg-gradient">Crear</button>
+                    <a href="{{ url('/categorias') }}" class="btn btn-secondary mb-4 text-center bg-gradient">Cancelar</a>
                 </form>
             </div>            
         </div>            

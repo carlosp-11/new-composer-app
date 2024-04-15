@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('nombre', 50);
             $table->float('precio', 8, 2);
             $table->string('descripcion', 200);
-            $table->enum('status', ['en stock', 'despachado', 'en traslado', 'con incidencia'])->default('en stock');
             //$table->foreignId('almacen')->constrained('almacenes')->onUpdate('cascade')->onDelete('cascade');
         });
 

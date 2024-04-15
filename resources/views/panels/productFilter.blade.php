@@ -11,13 +11,13 @@
                                 </a>
                             </div>
                             <form id="searchForm" class=" col-10 align-items-center pe-1">
-                                <div class="row gx-2">
+                                <div class="row gx-2 align-items-center">
                                     <div class="align-items-center col-10">
                                         <input type="text" class="form-control" name="q" 
                                             id="searchInput" placeholder="Buscar productos por nombre"
                                         >
                                     </div>
-                                    <button type="submit" class="btn btn-primary col-2" >  
+                                    <button type="submit" class="btn  col-2" >  
                                         <i class="fa-solid fa-magnifying-glass fs-2"></i>
                                     </button>
                                 </div>
@@ -26,7 +26,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row g-0">
+            <div class="row g-0 visually-hidden">
                 <div class="col ">
                     <div class="card-body">                                    
                         <div id="filtro" class="row gx-1">

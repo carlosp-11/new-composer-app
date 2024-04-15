@@ -8,6 +8,7 @@
         <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
         <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
         <title>CRUD APP - @yield('title')</title>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> 
     </head>
     <body class="" style="background-image: url('/img/boxes_patern.jpg');
         background-repeat:repeat; background-size: 600px;"
@@ -46,12 +47,15 @@
         const fileQrResult = document.getElementById('file-qr-result');
     
         function setResult(label, result) {
-            console.log(result.data);
-            label.textContent = result.data;
+            if (result && result.data) {
+                // Si se encuentra un resultado válido, establecerlo como hipervínculo
+                label.innerHTML = `<a href="${result.data}" target="_blank" class="text-decoration-none text-secondary fs-2 fw-light">Ir a tu producto</a>`;
+            } else {
+                // Si no se encuentra un código QR, mostrar el mensaje deseado
+                label.textContent = (result && result.data === "No QR code found") ? 'No se detecta código QR' : 'No se encontró ningún código QR';
+                label.classList.add('text-secondary');
+            }
             camQrResultTimestamp.textContent = new Date().toString();
-            label.style.color = 'teal';
-            clearTimeout(label.highlightTimeout);
-            label.highlightTimeout = setTimeout(() => label.style.color = 'inherit', 100);
         }
     
         // ####### Web Cam Scanning #######
@@ -132,7 +136,7 @@
             }
             QrScanner.scanImage(file, { returnDetailedScanResult: true })
                 .then(result => setResult(fileQrResult, result))
-                .catch(e => setResult(fileQrResult, { data: e || 'No QR code found.' }));
+                .catch(e => setResult(fileQrResult, { data: e || 'No QR code found XXXX.' }));
         });
 
     </script>
@@ -141,6 +145,5 @@
             $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> 
     <script src="{{ asset('js/closing-alerts.js') }}"></script>
 </html>

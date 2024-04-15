@@ -9,5 +9,5 @@ class Productos_has_categorias extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    protected $fillable= ['id_producto', 'id_categoria'];
+    protected $fillable= ['id_producto','id_categoria' , 'status', 'descripcion'];
 }

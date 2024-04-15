@@ -31,18 +31,20 @@
                                     method="POST" class="py-3 px-0" id="formulario"
                                 >
                                     @csrf            
-                                    <div class="my-3">
-                                        <input type="email" class="form-control py-2 fs-6 fw-light" 
+                                    <div class="my-3 form-floating">
+                                        <input type="email" class="form-control  fs-6 fw-light" 
                                             id="email" name="email" placeholder="Correo electrónico"
                                         >
+                                        <label class="fs-6 fw-light" for="email">Correo electrónico</label>
                                     </div>
-                                    <div class="mb-3">
+                                    <div class="mb-3 form-floating">
                                         <input type="password" class="form-control py-2 fs-6 fw-light" 
                                             id="password" name="password" placeholder="Contraseña"
                                         >
+                                        <label class="fs-6 fw-light" for="password">Contraseña</label>
                                     </div>
                                     <button type="submit" class="btn btn-primary w-100 
-                                        my-2 fw-semibold py-2 fs-5"
+                                        my-2 fw-semibold py-2 fs-5 bg-gradient"
                                         >
                                         {{$modo== 'login'? 'Ingresar':'Registrarse'  }}
                                     </button>
@@ -57,7 +59,7 @@
                                 <div class="text-center py-3">
                                     <a href="{{ $modo == 'login'? url('/signup') : url('/') }}" 
                                         class=" {{$modo== 'login'? 'btn btn-success':'btn btn-secondary' }} 
-                                        w-50 fw-semibold py-2 fs-6"
+                                        w-50 fw-semibold py-2 fs-6 bg-gradient"
                                     > 
                                         {{$modo== 'login'? 'Crea una cuenta nueva':'Volver'  }}
                                     </a> 

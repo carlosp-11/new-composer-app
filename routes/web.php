@@ -31,6 +31,8 @@ Route::get('/productos', [ProductosController::class, 'index'])->middleware(['we
 Route::post('/productos', [ProductosController::class, 'show'])->middleware('auth');;
 Route::get('/crear-producto', [ProductosController::class, 'create'])->middleware('auth');;
 Route::post('/crear-producto', [ProductosController::class, 'store'])->middleware('auth');;
+Route::get('productos/{id}', [ProductosController::class, 'detail'])->middleware('auth');;
+Route::post('productos/{id}', [ProductosController::class, 'updateStatus'])->middleware('auth');;
 Route::get('productos/{id}/editar', [ProductosController::class, 'edit'])->middleware('auth');;
 Route::put('productos/{id}/editar', [ProductosController::class, 'update'])->middleware('auth');;
 //Route::get('productos/{id}', [ProductosController::class, 'display'])->middleware('auth');;

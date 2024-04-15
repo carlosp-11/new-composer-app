@@ -36,10 +36,10 @@
                                 value="{{ $modo == 'editar' ? $almacen->slots : ''}}"
                             >
                         </div>
-                        <button type="submit" class="btn btn-primary mb-4 text-center">
+                        <button type="submit" class="btn btn-primary mb-4 text-center bg-gradient">
                         {{  $modo == 'crear' ? 'Crear': 'Editar' }}
                         </button>
-                        <a href="{{ url('/almacenes') }}" class="btn btn-secondary mb-4 text-center">
+                        <a href="{{ url('/almacenes') }}" class="btn btn-secondary mb-4 text-center bg-gradient">
                             Cancelar
                         </a>
                     </form>

@@ -7,6 +7,7 @@ use App\Models\Almacenes;
 use App\Models\Productos_has_categorias;
 use App\Models\User_has_productos;
 use App\Models\Images;
+use App\Models\Estados;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -48,9 +49,9 @@ class ProductosController extends Controller
     public function store(Request $request)
     {
         $this->validateData($request);
-        DB::beginTransaction();
         $userId = auth()->id();
         try {
+            DB::beginTransaction();
             $producto = new Productos([
                 'nombre' => $request->nombre,
                 'precio' => $request->precio,
@@ -62,29 +63,25 @@ class ProductosController extends Controller
             $producto->save();
 
             $idProducto = $producto->id;
-            
             $categoriasIds = $request->input('categorias');   
+            //dd($categoriasIds);
             foreach ($categoriasIds as $categoriaId) {
                 Productos_has_categorias::firstOrCreate([
                     'id_producto' => $idProducto,
                     'id_categoria' => $categoriaId,
                 ]);
             }
-            DB::commit(); 
+            DB::commit();
+            $estado = new Estados();
+            $estado->id_producto =$idProducto;
+            $estado->descripcion = "producto registrado"; // Valor por defecto
+            $estado->save(); 
             $this->requestQRCode($idProducto);
-            Session::increment('numProductos');
             return redirect('/productos')->with('success', 'Producto creado correctamente');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Error en la creación del producto: ' . $e->getMessage());
         }
-        /* Codigo anterior sin commit, y/o rollback
-        $producto = new Productos($request->all());
-        $producto->saveOrFail();
-        $id = $producto->id;
-        $this->almacenes($request, $id);
-        return redirect('/');
-        */
     }
 
     public function show(Request $request)
@@ -209,6 +206,24 @@ class ProductosController extends Controller
         return view('pages.productos.formulario',compact('producto', 'categorias', 'almacenes', 'productosCategorias', 'categoriasRelacionadas', 'modo'));
     }
 
+    public function detail(string $id)
+    {
+        $userId = auth()->id();
+        $producto = Productos::findOrFail($id);        
+        $categorias = Categorias::where('id_user', $userId)->get();            
+        $almacenes = Almacenes::where('id_user', $userId)->get();
+        $modo = 'editar';
+        $productosCategorias = Productos_has_categorias::all();
+        $categoriasRelacionadas = $productosCategorias->pluck('id_categoria')->toArray();
+        foreach ($categorias as $categoria) {
+            $categoria->relationExists = $productosCategorias->contains(function ($value) use ($categoria, $producto) {
+                return $value->id_categoria === $categoria->id && $value->id_producto === $producto->id;
+            });
+        }
+        $status = $this->getStatus($id);
+        return view('pages.productos.detalle',compact('producto', 'categorias', 'almacenes', 'productosCategorias', 'categoriasRelacionadas', 'status'));
+    }
+
     public function update(Request $request, string $id)
     { 
         $this->validateData($request);
@@ -273,8 +288,9 @@ class ProductosController extends Controller
 
     }
 
-    public function requestQRCode(string $id){
-        $productURL='http://new-composer-app.test/productos/'.$id.'/editar';
+    public function requestQRCode(string $id)
+    {
+        $productURL='http://new-composer-app.test/productos/'.$id;
         $urlAPI = 'https://getqrcode.p.rapidapi.com/api/getQR';
         $queryParams = [
             'forQR' => $productURL,
@@ -297,7 +313,8 @@ class ProductosController extends Controller
         }
     }
 
-    public function uploadFile($file) {
+    public function uploadFile($file) 
+    {
         try {
         $archivoTemporal = tempnam(sys_get_temp_dir(), 'archivo_temporal');
         file_put_contents($archivoTemporal, $file);
@@ -310,5 +327,30 @@ class ProductosController extends Controller
      } catch (\Exception $e) {
          return redirect()->back()->with('error', 'Error al subir archivo: ' . $e->getMessage());
      }
+    }
+
+    public function getStatus($id_producto) 
+    {
+        $status = Estados::where('id_producto', $id_producto)->get();
+        
+        // Verificar si se encontraron registros
+        $status = Estados::where('id_producto', $id_producto)->get();
+        // Retornar los registros encontrados
+        return $status;
+    }
+
+    public function updateStatus(Request $request){
+
+        try {
+        $estado = new Estados([
+            'id_producto' =>  $request->id_producto,
+            'descripcion' => $request->descripcion,
+            'status' => $request->status,
+        ]);
+        $estado->save();
+        return redirect('/productos')->with('success', 'Status del producto actualizado correctamente'); 
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Error al subir archivo: ' . $e->getMessage());
+        }
     }
 }

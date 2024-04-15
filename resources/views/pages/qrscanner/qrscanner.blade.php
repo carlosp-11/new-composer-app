@@ -14,7 +14,7 @@
                 <div class="card-body">
                     <div class="text-center d-flex flex-column justify-content-center">
                         <video class="mx-auto" id="qr-video" width="300" height="200" autoplay></video>
-                        <span id="cam-qr-result" style="color: teal;">No se detecta código QR</span>
+                        <p class="text-decoration-none text-secondary" id="cam-qr-result">No se detecta código QR</p>
                     </div>
                 </div>
             </div>

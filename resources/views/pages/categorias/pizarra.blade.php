@@ -59,7 +59,7 @@
                                 </p>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" 
+                                <button type="button" class="btn btn-secondary bg-gradient" 
                                     data-bs-dismiss="modal"
                                 >
                                     Cancelar
@@ -67,7 +67,7 @@
                                 <form method="POST" action= "{{url('categorias/'. $row->id)}}" > 
                                 @csrf
                                 @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">
+                                    <button type="submit" class="btn btn-danger bg-gradient">
                                         Borrar
                                     </button>
                                 </form>

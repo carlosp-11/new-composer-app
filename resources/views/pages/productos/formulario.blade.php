@@ -75,10 +75,10 @@
                             @endforeach
                         </div>
                         <div class="card-footer bg-white mb-4 px-0 mx-0">
-                            <button type="submit" class="btn btn-primary w-25 text-center">
+                            <button type="submit" class="btn btn-primary w-25 text-center bg-gradient">
                                 {{$modo == 'crear' ? 'Crear' : 'Editar'}}
                             </button>
-                            <a href="{{ url('/productos') }}" class="btn btn-secondary text-center">
+                            <a href="{{ url('/productos') }}" class="btn btn-secondary text-center bg-gradient">
                                 Cancelar
                             </a>
                         </div>

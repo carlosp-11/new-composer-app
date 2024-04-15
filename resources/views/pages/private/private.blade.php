@@ -3,20 +3,51 @@
 @section('title', 'AREA PERSONAL')
 
 @section('content')
-<div class="pt-5 mt-5 px-0 mx-auto">
 
-<div class="row ">
-    <div class="col">
-        <div class="card mb-3 m-0 px-0 pb-5 " style="width: 600px;">
-            @include('panels.index')
-        </div>
-    </div>
-</div>
+    <div class="mt-5 px-0 mx-0">  
+        <div class="row m-0 p-0 g-5 ">
+            <div class="col">
+            <div class="card mx-auto animated fadeInUp  bg-gradient bg-light shadow" style="min-width:15rem">
+                    <a class="bg-secondary  bg-gradient bg-opacity-50 text-center rounded-top border border-light" 
+                        href="#"
+                    > 
+                        <img src="{{ asset('img/centro-de-distribucion.png') }}"  
+                            class="card-img-top " 
+                            alt="Almacen" style="width: 15rem;" 
+                        />
+                    </a>
+                    <div class="card-body">
+                        <a class="text-decoration-none " href="/almacenes"> 
+                            <h5 class="card-title pb-2">  ALMACENES </h5>
+                        </a>
+                        <p class="card-text align-self-center">
+                        TOTAL Almacenes: {{$numeroAlmacenes}}
+                        </p>      
+                    </div>
+                </div>
+            </div>
 
-<div > 
-    <p class="animated rotate 2s infinite"> HOLA </p>
-    <img class="" src="{{ asset('img/cd_icon.png') }}" alt="Icono de CD" style="animation: rotate 2s infinite">
-</div>
+            <div class="col-md-6">
+                <div class = "card border-dark mb-3 bg-primary bg-gradient shadow mx-auto animated fadeIn px-2 py-3" 
+                    style = "width:22rem"
+                >
+                    <a class=" text-decoration-none " href="/almacenes">
+                        <div class="row g-0 align-items-center">
+                            <div class="col-5 text-center">
+                                <h4 class="text-white fw-light text-nowrap "> ALMACENES </h4>
+                            </div>
+                            <div class="col-7 justify-content-center text-center">
+                                <img src="{{ asset('img/centro-de-distribucion.png') }}" 
+                                    class="bg-primary bg-gradient" 
+                                    alt="gestionar almacén" style="max-height:44px"
+                                >
+                            </div>
+                            <p class="col card-text align-self-center"> TOTAL Almacenes: {{$numeroAlmacenes}}</p>
+
+                        </div>
+                    </a>    
+                </div>
+            </div>
 
 
     <div class="row ">
@@ -43,6 +74,7 @@
             </div>
         </div>
     </div>
+
 
     <div class="row ">
         <div class="col">            
