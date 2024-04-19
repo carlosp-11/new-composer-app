@@ -25,9 +25,9 @@ class UserController extends Controller
         //if(Auth::check())  return redirect()->back();
         $modo = 'login';
         if (auth()->check()) {
-            return $this->show();
+            //return $this->show();
             //return view('pages.private.private'); 
-            //return view('pages.home.index'); 
+            return view('pages.home.index'); 
         } else {
             return view('pages.login.login', compact('modo'));
         }
@@ -40,11 +40,11 @@ class UserController extends Controller
     }
 
     public function show()
-{
+    {
     $user = Auth::user();
     
     return view('pages.home.index'); 
-}
+    }
 
 
     public function store(Request $request) {
