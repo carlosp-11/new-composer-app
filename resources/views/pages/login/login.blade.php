@@ -27,7 +27,7 @@
                     <div class="row g-0">
                         <div class="col ">
                             <div class="card-body pe-3">    
-                                <form action="{{ $modo == 'login' ? url('/login')->secure() : url('/signup')->secure() }}" 
+                                <form action="{{ $modo == 'login' ? url('/login') : url('/signup') }}" 
                                     method="POST" class="py-3 px-0" id="formulario"
                                 >
                                     @csrf            
