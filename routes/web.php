@@ -56,10 +56,10 @@ Route::delete('categorias/{id}', [CategoriasController::class, 'destroy'])->midd
 
 //Rutas de Login/Signup
 Route::get('/login', [UserController::class, 'index'])->name('login');
-Route::post('/login', [UserController::class, 'authenticate']);
-Route::post('/logout', [UserController::class, 'logout']);
+Route::post('/login', [UserController::class, 'authenticate'])->middleware('auth');;
+Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');;
 Route::get('/signup', [UserController::class, 'create']);
-Route::post('/signup', [UserController::class, 'store']);
+Route::post('/signup', [UserController::class, 'store'])->middleware('auth');;
 Route::get('/forgot-password', function () {
     return view('auth.forgot-password');
 })->middleware('guest')->name('password.request');
