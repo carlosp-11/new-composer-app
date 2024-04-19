@@ -27,6 +27,7 @@ class UserController extends Controller
         if (auth()->check()) {
             return $this->show();
             //return view('pages.private.private'); 
+            //return view('pages.home.index'); 
         } else {
             return view('pages.login.login', compact('modo'));
         }
@@ -90,7 +91,7 @@ class UserController extends Controller
            
             Auth::login($nuevoUsuario);
 
-            return redirect('/')->with('success', 'Usuario registirado correctamente');
+            return redirect('/')->with('success', 'Usuario registrado correctamente');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Error en el registro del usuario: ' . $e->getMessage());
@@ -119,7 +120,7 @@ class UserController extends Controller
             if (Auth::attempt($credentials)) {
                 $request->session()->regenerate();
                 //Auth::logout();
-                return redirect()->intended('/private');
+                return redirect()->intended('/');
             } else { 
             return  redirect()->back()->withError('El usuario y/o la contraseña no coinciden con ningún registro');
             }
