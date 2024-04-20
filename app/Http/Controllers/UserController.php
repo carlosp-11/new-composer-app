@@ -120,7 +120,7 @@ class UserController extends Controller
             if (Auth::attempt($credentials)) {
                 $request->session()->regenerate();
                 //Auth::logout();
-                return redirect()->intended('/private');
+                return redirect()->intended('/');
             } else { 
             return  redirect()->back()->withError('El usuario y/o la contraseña no coinciden con ningún registro');
             }
