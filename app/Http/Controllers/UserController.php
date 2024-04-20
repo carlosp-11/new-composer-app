@@ -25,7 +25,8 @@ class UserController extends Controller
         //if(Auth::check())  return redirect()->back();
         $modo = 'login';
         if (auth()->check()) {
-            return $this->show();
+            //return $this->show();
+            redirect('pages.home.index');
             //return view('pages.private.private'); 
         } else {
             return view('pages.login.login', compact('modo'));
