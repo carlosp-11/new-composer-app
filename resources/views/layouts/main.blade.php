@@ -7,7 +7,8 @@
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
         <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
         <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
-        <title>CRUD APP - @yield('title')</title>
+        <link rel="icon" type="image/png" href="{{ asset('img/cd_icon_mini.png') }}">
+        <title>C-DEPOT - @yield('title')</title>
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> 
     </head>
     <body class="" style="background-image: url('/img/boxes_patern.jpg');
