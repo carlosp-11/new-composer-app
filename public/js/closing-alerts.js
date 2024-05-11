@@ -5,5 +5,5 @@ if (alerta) {
     setTimeout(function() {
         // Oculta la alerta estableciendo su estilo de visualización en "none"
         alerta.style.display = 'none';
-    }, 10000);
+    }, 60000);
 }
