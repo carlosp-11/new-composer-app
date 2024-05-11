@@ -32,6 +32,7 @@
                                 >
                                     @csrf            
                                     <div class="my-3 form-floating">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                                         <input type="email" class="form-control  fs-6 fw-light" 
                                             id="email" name="email" placeholder="Correo electrónico"
                                         >

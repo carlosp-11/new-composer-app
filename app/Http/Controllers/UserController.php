@@ -25,7 +25,8 @@ class UserController extends Controller
         //if(Auth::check())  return redirect()->back();
         $modo = 'login';
         if (auth()->check()) {
-            return $this->show();
+            //return $this->show();
+            redirect('pages.home.index');
             //return view('pages.private.private'); 
         } else {
             return view('pages.login.login', compact('modo'));
@@ -119,7 +120,7 @@ class UserController extends Controller
             if (Auth::attempt($credentials)) {
                 $request->session()->regenerate();
                 //Auth::logout();
-                return redirect()->intended('/private');
+                return redirect()->intended('/');
             } else { 
             return  redirect()->back()->withError('El usuario y/o la contraseña no coinciden con ningún registro');
             }

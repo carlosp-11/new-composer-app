@@ -8,8 +8,9 @@
         <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
         <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+        <link rel="icon" type="image/png" href="{{ asset('img/cd_icon_mini.png') }}">
 
-        <title>CRUD APP - @yield('title')</title>
+        <title>C-DEPOT - @yield('title')</title>
     </head>
     <body class="" style="background-image: url('/img/boxes_patern.jpg');
         background-repeat:repeat; background-size: 600px;"

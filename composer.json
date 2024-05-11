@@ -1,5 +1,6 @@
 {
     "name": "laravel/laravel",
+    "version": "10.0.0",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
     "keywords": ["laravel", "framework"],

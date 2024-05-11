@@ -10,6 +10,12 @@
                             alt="Producto" style="width: 15rem;" 
                         >
                     </a>
+                    @php
+                            $imagenProducto = $imagenes->where('id_producto', $row->id)->first();
+                        @endphp
+                        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#imagenModal">
+                          Ver código QR
+                        </button>
                     <div class="card-body">
                         <span class="row justifiy-content-between">
                             <a class="text-decoration-none" href="{{ url('productos/'. $row->id) }}"> 
@@ -97,6 +103,20 @@
                     </div>
                 </div>
             </div>
+
+            <div class="modal fade" id="imagenModal" tabindex="-1" role="dialog" aria-labelledby="imagenModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-body text-center">
+                    <img src="{{$imagenProducto->url}}" alt="Código QR del producto" id="imagenProducto" class="img-fluid">
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Regresar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
         @endforeach
     @else
         <div class="col">
@@ -112,6 +132,4 @@
        </div>
     @endif
 </div>    
-
-
 

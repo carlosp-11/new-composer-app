@@ -23,7 +23,7 @@ use Illuminate\Http\Request;
 */
 
 //Ruta de Home
-Route::get('/', [MainController::class, 'index']);
+Route::get('/', [MainController::class, 'index'])->middleware('auth');;
 //Route::get('/', [UserController::class, 'index'])->name('login');
 
 //Rutas de Productos
@@ -70,8 +70,8 @@ Route::get('/private', [UserController::class, 'show'])->middleware('auth');
 Route::post('/private', [UserController::class, 'sendWelcomeEmail'])->name('enviar-bienvenida');
 Route::delete('/private', [UserController::class, 'destroy'])->middleware('auth');
 
-Route::get('/getQRCode', [APIController::class, 'getQRCode']);
-Route::get('/images/{id}', [APIController::class, 'showImage']);
+Route::get('/getQRCode', [APIController::class, 'getQRCode'])->middleware('auth');;
+Route::get('/images/{id}', [APIController::class, 'showImage'])->middleware('auth');;
 
 Route::get('/qrscanner', function () {
     return view('pages.qrscanner.qrscanner');
