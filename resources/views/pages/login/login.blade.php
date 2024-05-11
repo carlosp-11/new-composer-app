@@ -3,9 +3,9 @@
 @section('title', $modo == 'login' ? 'INGRESAR' : 'REGISTRARSE')
 
 @section('content')
-<div class="m-0 p-0 animated fadeInDown">
+<div class="m-0 p-0 animated fadeInDown mb-5 pb-5">
     <div class="row mt-5 mx-0 align-items-center gx-4 gy-5">
-        <div class= " col-12 col-lg-6">
+        <div class= " col-12 col-lg-6 z-0">
             <div class="row gx-3 justify-content-center">
                 <div class="col-auto align-self-center">
                     <img class="rotating-image " 
@@ -43,13 +43,21 @@
                                             id="password" name="password" placeholder="Contraseña"
                                         >
                                         <label class="fs-6 fw-light" for="password">Contraseña</label>
+                                        <div id="passwordHelpBlock" 
+                                            class="form-text {{ $modo == 'login'? 'd-none' : ''}}" 
+                                            style='text-align:justify'
+                                        >
+                                            Tu contraseña debe tener al menos 8 caracteres. 
+                                            Puede contener letras números o caracteres especiales, 
+                                            pero no debe contener espacios en blanco ni emojis.
+                                        </div>
                                     </div>
                                     <button type="submit" class="btn btn-primary w-100 
                                         my-2 fw-semibold py-2 fs-5 bg-gradient"
                                         >
                                         {{$modo== 'login'? 'Ingresar':'Registrarse'  }}
                                     </button>
-                                    <div class="text-center mt-3">
+                                    <div class="text-center mt-3 d-none">
                                         <a class="text-decoration-none" href="#"> 
                                             ¿Has olvidado la contraseña? 
                                         </a>      
@@ -60,7 +68,7 @@
                                 <div class="text-center py-3">
                                     <a href="{{ $modo == 'login'? url('/signup') : url('/') }}" 
                                         class=" {{$modo== 'login'? 'btn btn-success':'btn btn-secondary' }} 
-                                        w-50 fw-semibold py-2 fs-6 bg-gradient"
+                                        w-75 fw-semibold py-2 fs-6 bg-gradient"
                                     > 
                                         {{$modo== 'login'? 'Crea una cuenta nueva':'Volver'  }}
                                     </a> 
@@ -70,8 +78,6 @@
                     </div>
                 </div>
             </div>
-
-            
         </div>
     </div>
 </div>
