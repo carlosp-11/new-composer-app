@@ -28,6 +28,7 @@ class UserController extends Controller
             //return $this->show();
             redirect('pages.home.index');
             //return view('pages.private.private'); 
+            return view('pages.home.index'); 
         } else {
             return view('pages.login.login', compact('modo'));
         }
@@ -40,35 +41,11 @@ class UserController extends Controller
     }
 
     public function show()
-{
+    {
     $user = Auth::user();
-    $userId = auth()->id();
-    $numeroCategorias = Categorias::where('id_user', $userId)->count();            
-    $numeroAlmacenes = Almacenes::where('id_user', $userId)->count();
-    $numeroProductos = Productos::where('id_user', $userId)->count();
-    $fechaCreacion = $user->created_at->format('d-m-Y');
-    $correoElectronico = $user->email;
-
-    $numProductos = Session::get('numProductos', function () use ($userId) {
-        $count = Productos::where('id_user', $userId)->count();
-        Session::put('numProductos', $count);
-        return $count;
-    });
-
-    $numAlmacenes = Session::get('numAlmacenes', function () use ($userId) {
-        $count = Almacenes::where('id_user', $userId)->count();
-        Session::put('numAlmacenes', $count);
-        return $count;
-    });
-
-    $numCategorias = Session::get('numCategorias', function () use ($userId) {
-        $count = Categorias::where('id_user', $userId)->count();
-        Session::put('numCategorias', $count);
-        return $count;
-    });
-
-    return view('pages.private.private', compact('numeroAlmacenes', 'numeroCategorias', 'numeroProductos', 'fechaCreacion', 'correoElectronico', 'numProductos', 'numAlmacenes', 'numCategorias')); 
-}
+    
+    return view('pages.home.index'); 
+    }
 
 
     public function store(Request $request) {
@@ -91,7 +68,7 @@ class UserController extends Controller
            
             Auth::login($nuevoUsuario);
 
-            return redirect('/')->with('success', 'Usuario registirado correctamente');
+            return redirect('/')->with('success', 'Usuario registrado correctamente');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Error en el registro del usuario: ' . $e->getMessage());
@@ -128,9 +105,6 @@ class UserController extends Controller
 
     public function logout() {
         Auth::logout();
-        Session::put('numAlmacenes', 0);
-        Session::put('numProductos', 0);
-        Session::put('numCategorias', 0);
         return redirect('/login')->with('success', 'Sesión cerrada correctamente');
     }
 
