@@ -26,6 +26,7 @@ class UserController extends Controller
         $modo = 'login';
         if (auth()->check()) {
             //return $this->show();
+            redirect('pages.home.index');
             //return view('pages.private.private'); 
             return view('pages.home.index'); 
         } else {

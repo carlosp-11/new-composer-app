@@ -29,12 +29,13 @@ class ProductosController extends Controller
         $categorias = Categorias::where('id_user', $userId)->get();            
         $almacenes = Almacenes::where('id_user', $userId)->get();
         $productosCategorias = Productos_has_categorias::all();
+        $imagenes = Images::all();
         $productos = Productos::where('id_user', $userId)
                                 ->orderBy('nombre', 'asc')
                                 ->paginate(12);
         return view('pages.productos.pizarra', compact(
             'productos', 
-            'categorias', 'almacenes', 'productosCategorias')); 
+            'categorias', 'almacenes', 'productosCategorias', 'imagenes')); 
     }
 
     public function create()
@@ -307,13 +308,13 @@ class ProductosController extends Controller
                 'headers' => $headers,
             ]);
            $result = $response->getBody()->getContents();
-           $this->uploadFile($result); 
+           $this->uploadFile($result, $id); 
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Error al generar el código QR: ' . $e->getMessage());
         }
     }
 
-    public function uploadFile($file) 
+    public function uploadFile($file, $id_upload) 
     {
         try {
         $archivoTemporal = tempnam(sys_get_temp_dir(), 'archivo_temporal');
@@ -321,6 +322,8 @@ class ProductosController extends Controller
     
         // Subir el archivo a Cloudinary
         $cloudinaryResponse = Cloudinary::upload($archivoTemporal)->getSecurePath();
+
+        $this->saveQR( $cloudinaryResponse, $id_upload);
     
         // Eliminar el archivo temporal
         unlink($archivoTemporal);
@@ -353,4 +356,17 @@ class ProductosController extends Controller
             return redirect()->back()->with('error', 'Error al subir archivo: ' . $e->getMessage());
         }
     }
+
+    public function saveQR ($url, $id_upload) {
+        try {
+            $image = new Images([
+                'nombre' => 'QR_Producto',
+                'url' => $url,
+                'id_producto' =>  $id_upload,
+            ]);
+            $image->save();
+            } catch (\Exception $e) {
+                return redirect()->back()->with('error', 'Error al guardar imagen QR: ' . $e->getMessage());
+            }
+    } 
 }
