@@ -31,7 +31,7 @@
                     shadow mx-auto animated fadeIn px-2 py-3"  
                     style= "width:22rem"
                 >
-                    <a class=" text-decoration-none " href="/categorias">
+                    <a class=" text-decoration-none " href="/categorias ">
                         <div class="row g-0 align-items-center">
                             <div class="col-7 justify-content-center text-center">
                                 <img src="{{ asset('img/categories.webp') }}" 
