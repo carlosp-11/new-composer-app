@@ -291,7 +291,8 @@ class ProductosController extends Controller
 
     public function requestQRCode(string $id)
     {
-        $productURL='http://new-composer-app.test/productos/'.$id;
+        //$productURL='http://new-composer-app.test/productos/'.$id;
+        $productURL= env('APP_URL') . '/productos/' . $id;
         $urlAPI = 'https://getqrcode.p.rapidapi.com/api/getQR';
         $queryParams = [
             'forQR' => $productURL,
