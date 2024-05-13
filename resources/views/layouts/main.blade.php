@@ -7,6 +7,7 @@
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
         <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
         <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
         <link rel="icon" type="image/png" href="{{ asset('img/cd_icon_mini.png') }}">
         <title>C-DEPOT - @yield('title')</title>
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> 

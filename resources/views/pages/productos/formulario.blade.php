@@ -3,7 +3,19 @@
 @section('title', $modo == 'crear' ? 'CREAR UN PRODUCTO' : 'EDITAR UN PRODUCTO')
 
 @section('content')
-    <div class="pt-5 mt-5 px-3 justify-content-center">
+    <div class="modal fade" id="spinnerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered bg-transparent border-0">   
+            <div class="modal-content bg-transparent border-0">
+                <div class="modal-body text-center bg-transparent border-0"> 
+                    <img class="animated zoomIn infinite" 
+                        src="{{ asset('img/cd_icon.png') }}" alt="C"
+                        style="max-width: 10rem; height: auto; margin:auto"   
+                    >
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pt-5 mt-5 px-3 justify-content-center" id="product_form">
         <div class="card mb-3 px-0 mx-auto animated fadeInDown shadow" style="max-width: 600px;">
             <div class="row g-0 mx-0 p-0">
                 <div class="card-header">
@@ -95,6 +107,8 @@
     <script>
         $(document).ready(function () {
             $('#formulario').submit(function (e) {
+                $('#spinnerModal').modal('show'); // Muestra el modal al enviar el formulario
+                $('#product_form').hide();
                 // Verificar que ningún campo se envíe vacío
                 if (!$('#nombre').val() || !$('#precio').val() || !$('#categoria').val() || !$('input[name="mercadona"]:checked').length && !$('input[name="alteza"]:checked').length && !$('input[name="lidl"]:checked').length) {
                  // alert('Todos los campos deben estar completos.');
@@ -112,6 +126,9 @@
                   // alert('El nombre debe tener menos de 150 caracteres.');
                   // e.preventDefault(); 
                 }
+            });
+            $(document).ajaxComplete(function () {
+                $('#spinnerModal').modal('hide');
             });
         });
     </script>
