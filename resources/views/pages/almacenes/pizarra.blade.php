@@ -22,7 +22,7 @@
                         </a>
                         <p class="card-text align-self-center">
                             {{ $row->descripcion }} <br/>
-                            Capacidad: X/{{ $row->slots }}
+                            Capacidad:{{ $row->numProductos }} /{{ $row->slots }}
                         </p>
                         <div class="row justify-content-end">
                             <a href="{{ url('almacenes/'. $row->id).'/editar' }}" 

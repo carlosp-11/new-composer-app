@@ -43,7 +43,7 @@
                                 <img src="{{ asset('img/centro-de-distribucion.png') }}" 
                                     class="bg-primary bg-gradient d-none d-sm-block" 
                                     alt="gestionar almacén" style="max-height:8rem"
-                                >
+                                />
                             </div>
                             <div class="col-10 col-sm-7 text-center">
                                 <h4 class="text-white fw-light text-nowrap fs-2"> Almacenes </h4>
@@ -65,7 +65,7 @@
                                 <img src="{{ asset('img/categories.webp') }}" 
                                     class="bg-primary bg-gradient d-none d-sm-block" 
                                     alt="gestionar almacén" style="max-height:8rem"
-                                >
+                                />
                             </div>
                             <div class="col-10 col-sm-7 text-center">
                                 <h4 class="text-white fw-light text-nowrap fs-2"> Categorías </h4>
@@ -87,7 +87,7 @@
                                 <img src="{{ asset('img/boxes.png') }}" 
                                     class="bg-primary bg-gradient d-none d-sm-block" 
                                     alt="gestionar almacén" style="max-height:8rem"
-                                >
+                                />
                             </div>
                             <div class="col-10 col-sm-7 text-center">
                                 <h4 class="text-white fw-light text-nowrap fs-2"> Productos </h4>
@@ -109,7 +109,7 @@
                                 <img src="{{ asset('img/qr-code.png') }}" 
                                     class="bg-primary bg-gradient d-none d-sm-block" 
                                     alt="gestionar almacén" style="max-height:8rem"
-                                >
+                                />
                             </div>
                             <div class="col-10 col-sm-7 text-center">
                                 <h4 class="text-white fw-light text-nowrap fs-2"> Escanear QR </h4>
@@ -117,6 +117,7 @@
                         </div>
                     </a>    
                 </div>
+            <div>
         </div>
     </div>
 @endsection
