@@ -45,6 +45,7 @@
                                     alt="gestionar almacén" style="max-height:8rem"
                                 >
                             </div>
+
                             <div class="col-10 col-sm-7 text-center">
                                 <h4 class="text-white fw-light text-nowrap fs-2"> Almacenes </h4>
                             </div>
@@ -96,7 +97,6 @@
                     </a>    
                 </div>
             </div>
-
             <div class="col-md-6 ">
                 <div class="card border-dark mb-3 bg-primary bg-gradient shadow mx-auto 
                     animated fadeIn px-2 py-3"  
@@ -117,6 +117,7 @@
                         </div>
                     </a>    
                 </div>
+            </div>
         </div>
     </div>
 @endsection

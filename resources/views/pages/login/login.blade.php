@@ -57,6 +57,7 @@
                                         >
                                         {{$modo== 'login'? 'Ingresar':'Registrarse'  }}
                                     </button>
+
                                     <div class="text-center mt-3">
                                         <a class="text-decoration-none d-none" href="#"> 
                                             ¿Has olvidado la contraseña? 
@@ -78,8 +79,6 @@
                     </div>
                 </div>
             </div>
-
-            
         </div>
     </div>
 </div>

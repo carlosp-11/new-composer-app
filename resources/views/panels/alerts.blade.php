@@ -1,5 +1,5 @@
 @if (session('success'))
-    <div class="alert alert-success c px-0 mx-0 mt-3 alert-dismissible fade show z-3 w-100 animated fadeInLeft" 
+    <div class="alert alert-success px-0 mx-0 mt-3 alert-dismissible fade show z-3 w-100 animated fadeInLeft" 
         role="alert" id="miAlerta"
     >
         {{ session('success') }}
@@ -19,7 +19,7 @@
     </div>
 @endif
 @if (session('error'))
-  <div class="alert alert-danger  mt-3 px-0 mx-0 alert-dismissible fade show z-3 w-100 animated fadeInLeft" 
+  <div class="alert alert-danger  mt-3 px-0 mx-0 alert-dismissible fade show z-3 w-100 animated fadeInLeft"
     role="alert" id="miAlerta"
   >
     {{ session('error') }}
