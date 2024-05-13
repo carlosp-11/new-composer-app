@@ -14,7 +14,12 @@
         </a>
         <ul class="dropdown-menu dropdown-menu-end bg-light">
             <div>
-                <button type="button" class="btn dropdown-item" data-bs-toggle="modal" 
+            <button type="button" class="btn dropdown-item text-center" data-bs-toggle="modal" 
+                    data-bs-target="#helpModal"
+                >
+                        Ayuda
+                </button>
+                <button type="button" class="btn dropdown-item text-center" data-bs-toggle="modal" 
                     data-bs-target="#sessionModal"
                 >
                         Cerrar sesión
@@ -53,3 +58,23 @@
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">¿Por dónde comenzar?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p>1.- Comienza creando los almacenes en los que se guardarán los productos.</p> <br/>
+                <p>2.- Crea las categorías que necesites para agrupar tus productos.</p> <br/>
+                <p>3.- Ya puedes empezar a registrar productos.</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
