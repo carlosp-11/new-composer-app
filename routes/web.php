@@ -22,8 +22,22 @@ use Illuminate\Http\Request;
 |
 */
 
-//Ruta de Home
-Route::get('/', [MainController::class, 'index'])->middleware('auth');;
+//Ruta de Home - Temporal para debugging
+Route::get('/', function() {
+    return response()->json([
+        'status' => 'OK',
+        'message' => 'Laravel funcionando correctamente',
+        'timestamp' => now(),
+        'php_version' => phpversion(),
+        'app_env' => config('app.env'),
+        'app_debug' => config('app.debug'),
+        'db_connection' => config('database.default')
+    ]);
+});
+
+// Ruta original comentada para debugging
+//Route::get('/', [MainController::class, 'index'])->middleware('auth');
+
 //Route::get('/', [UserController::class, 'index'])->name('login');
 
 //Rutas de Productos

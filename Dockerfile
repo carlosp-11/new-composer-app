@@ -54,10 +54,10 @@ RUN rm -f composer.lock && \
 # Instalar dependencias Node.js y compilar assets
 RUN npm install && npm run build
 
-# Configurar Laravel
-RUN php artisan config:cache && \
-    php artisan route:cache && \
-    php artisan view:cache
+# Configurar Laravel (sin cache para debugging)
+# RUN php artisan config:cache && \
+#     php artisan route:cache && \
+#     php artisan view:cache
 
 # Exponer puerto 80
 EXPOSE 80
