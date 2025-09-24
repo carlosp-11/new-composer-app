@@ -108,7 +108,7 @@
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-body text-center">
-                    <img src="{{$imagenProducto->url}}" alt="Código QR del producto" id="imagenProducto" class="img-fluid">
+                    <img src="{{$imagenProducto->url ?? asset('img/pack.png')}}" alt="Código QR del producto" id="imagenProducto" class="img-fluid">
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Regresar</button>
