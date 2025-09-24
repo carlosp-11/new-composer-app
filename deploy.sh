@@ -35,13 +35,29 @@ php artisan cache:clear
 # Verificar configuración de sesiones
 echo "🔧 Configuración de sesiones: $SESSION_DRIVER"
 
-# Ejecutar migraciones (incluye tabla sessions)
-echo "📊 Ejecutando migraciones..."
-php artisan migrate --force
+# Verificar estado de la base de datos
+echo "📊 Verificando base de datos..."
+ls -la /var/www/html/database/production.sqlite || echo "⚠️ DB file no existe"
 
-# Ejecutar seeders (simplificado para debugging)
+# Ejecutar migraciones desde cero
+echo "📊 Ejecutando migraciones frescas..."
+php artisan migrate:fresh --force
+
+# Verificar que las tablas se crearon
+echo "🔍 Verificando tablas creadas..."
+php artisan tinker --execute="
+echo 'Tablas en SQLite:';
+\$pdo = DB::connection()->getPdo();
+\$tables = \$pdo->query(\"SELECT name FROM sqlite_master WHERE type='table'\")->fetchAll();
+foreach(\$tables as \$table) {
+    echo '- ' . \$table['name'] . PHP_EOL;
+}
+echo 'Total tablas: ' . count(\$tables);
+"
+
+# Ejecutar seeders
 echo "🌱 Ejecutando seeders..."
-php artisan db:seed --force || echo "⚠️ Seeders fallaron, continuando..."
+php artisan db:seed --force
 
 # Optimizar para producción
 echo "⚡ Optimizando aplicación..."

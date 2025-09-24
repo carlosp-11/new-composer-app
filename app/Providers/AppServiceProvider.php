@@ -25,9 +25,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Solo forzar HTTPS en producción
+        // Forzar HTTPS en producción (Render.com)
         if (app()->environment('production')) {
             URL::forceScheme('https');
+        }
+        
+        // Para Render.com: confiar en proxy headers
+        if (app()->environment('production')) {
+            $this->app['request']->server->set('HTTPS', 'on');
         }
     }
 }
