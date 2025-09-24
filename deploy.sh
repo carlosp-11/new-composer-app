@@ -3,6 +3,9 @@
 # Script de deployment para Render.com
 echo "🚀 Iniciando deployment de Laravel en Render.com..."
 
+# Verificar versión de PHP
+echo "📋 Versión PHP: $(php -v | head -n 1)"
+
 # Crear base de datos SQLite si no existe
 if [ ! -f /var/www/html/database/production.sqlite ]; then
     echo "📁 Creando base de datos SQLite..."

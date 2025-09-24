@@ -1,5 +1,5 @@
-# Usa la imagen oficial de PHP 8.1 con Apache
-FROM php:8.1-apache
+# Usa la imagen oficial de PHP 8.2 con Apache (requerido por Symfony 7.x)
+FROM php:8.2-apache
 
 # Instalar dependencias del sistema
 RUN apt-get update && apt-get install -y \
@@ -42,8 +42,9 @@ RUN mkdir -p /var/www/html/database && \
     chmod -R 755 /var/www/html/bootstrap/cache && \
     chmod 664 /var/www/html/database/production.sqlite
 
-# Instalar dependencias PHP
-RUN composer install --optimize-autoloader --no-dev
+# Limpiar y reinstalar dependencias PHP con versión correcta
+RUN rm -f composer.lock && \
+    composer install --optimize-autoloader --no-dev
 
 # Instalar dependencias Node.js y compilar assets
 RUN npm install && npm run build
