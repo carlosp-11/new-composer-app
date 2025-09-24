@@ -43,13 +43,13 @@ php artisan migrate --force
 echo "🌱 Ejecutando seeders..."
 php artisan db:seed --force || echo "⚠️ Seeders fallaron, continuando..."
 
-# Limpiar configuraciones (sin cache para debugging)
+# Optimizar para producción
 echo "⚡ Optimizando aplicación..."
 php artisan config:clear
 php artisan route:clear
 php artisan view:clear
-# php artisan config:cache
-# php artisan route:cache
-# php artisan view:cache
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
 
 echo "✅ Deployment completado!"

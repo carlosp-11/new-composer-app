@@ -22,21 +22,14 @@ use Illuminate\Http\Request;
 |
 */
 
-//Ruta de Home - Temporal para debugging
+//Ruta de Home - Redirige a login si no está autenticado
 Route::get('/', function() {
-    return response()->json([
-        'status' => 'OK',
-        'message' => 'Laravel funcionando correctamente',
-        'timestamp' => now(),
-        'php_version' => phpversion(),
-        'app_env' => config('app.env'),
-        'app_debug' => config('app.debug'),
-        'db_connection' => config('database.default')
-    ]);
+    if (auth()->check()) {
+        return app(App\Http\Controllers\MainController::class)->index();
+    } else {
+        return redirect('/login');
+    }
 });
-
-// Ruta original comentada para debugging
-//Route::get('/', [MainController::class, 'index'])->middleware('auth');
 
 //Route::get('/', [UserController::class, 'index'])->name('login');
 
