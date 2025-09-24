@@ -8,8 +8,6 @@ services:
       composer install --optimize-autoloader --no-dev
       npm install
       npm run build
-      chmod +x deploy.sh
-      ./deploy.sh
     startCommand: apache2-foreground
     domains:
       - c-depot.onrender.com

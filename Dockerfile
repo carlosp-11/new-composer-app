@@ -62,5 +62,9 @@ RUN npm install && npm run build
 # Exponer puerto 80
 EXPOSE 80
 
-# Comando de inicio
-CMD ["apache2-foreground"]
+# Copiar script de inicialización
+COPY startup.sh /usr/local/bin/startup.sh
+RUN chmod +x /usr/local/bin/startup.sh
+
+# Comando de inicio - ejecuta migraciones y luego Apache
+CMD ["/usr/local/bin/startup.sh"]
