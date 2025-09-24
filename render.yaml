@@ -1,0 +1,38 @@
+services:
+  - type: web
+    name: c-depot
+    env: docker
+    dockerfile: ./Dockerfile
+    plan: free  # o starter, standard, etc.
+    buildCommand: |
+      composer install --optimize-autoloader --no-dev
+      npm install
+      npm run build
+      chmod +x deploy.sh
+      ./deploy.sh
+    startCommand: apache2-foreground
+    domains:
+      - c-depot.onrender.com
+    envVars:
+      - key: APP_NAME
+        value: C-Depot
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: DB_CONNECTION
+        value: sqlite
+      - key: DB_DATABASE
+        value: /var/www/html/database/production.sqlite
+      - key: BROADCAST_DRIVER
+        value: null
+      - key: CACHE_DRIVER
+        value: file
+      - key: SESSION_DRIVER
+        value: file
+      - key: QUEUE_CONNECTION
+        value: sync
+      - key: LOG_CHANNEL
+        value: stack
+      - key: LOG_LEVEL
+        value: error
