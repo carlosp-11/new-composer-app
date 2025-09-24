@@ -16,23 +16,29 @@ fi
 echo "🔐 Configurando permisos..."
 chmod 664 /var/www/html/database/production.sqlite
 chown www-data:www-data /var/www/html/database/production.sqlite
+chmod -R 775 /var/www/html/storage
+chmod -R 775 /var/www/html/bootstrap/cache
 
-# Generar clave de aplicación si no existe
+# Verificar que APP_KEY esté configurada
 if [ -z "$APP_KEY" ]; then
-    echo "🔑 Generando clave de aplicación..."
-    php artisan key:generate --force
+    echo "❌ ERROR: APP_KEY no está configurada en variables de entorno"
+    exit 1
+else
+    echo "✅ APP_KEY configurada correctamente"
 fi
+
+# Limpiar configuraciones antes de migraciones
+echo "🧹 Limpiando configuraciones..."
+php artisan config:clear
+php artisan cache:clear
 
 # Ejecutar migraciones
 echo "📊 Ejecutando migraciones..."
 php artisan migrate --force
 
-# Ejecutar seeders solo si la base de datos está vacía
-USER_COUNT=$(php artisan tinker --execute="echo App\Models\User::count();")
-if [ "$USER_COUNT" -eq "0" ]; then
-    echo "🌱 Ejecutando seeders..."
-    php artisan db:seed --force
-fi
+# Ejecutar seeders (simplificado para debugging)
+echo "🌱 Ejecutando seeders..."
+php artisan db:seed --force || echo "⚠️ Seeders fallaron, continuando..."
 
 # Limpiar y cachear configuraciones
 echo "⚡ Optimizando aplicación..."

@@ -19,7 +19,9 @@ services:
       - key: APP_ENV
         value: production
       - key: APP_DEBUG
-        value: false
+        value: true
+      - key: APP_KEY
+        value: base64:ZrpbqwELd3bKvk0+M8lLUnCOEOMiXEmLYnqIX1IMAFI=
       - key: DB_CONNECTION
         value: sqlite
       - key: DB_DATABASE
