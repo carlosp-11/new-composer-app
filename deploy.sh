@@ -32,7 +32,10 @@ echo "🧹 Limpiando configuraciones..."
 php artisan config:clear
 php artisan cache:clear
 
-# Ejecutar migraciones
+# Verificar configuración de sesiones
+echo "🔧 Configuración de sesiones: $SESSION_DRIVER"
+
+# Ejecutar migraciones (incluye tabla sessions)
 echo "📊 Ejecutando migraciones..."
 php artisan migrate --force
 
