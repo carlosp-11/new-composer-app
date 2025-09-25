@@ -12,6 +12,6 @@ class Almacenes extends Model
     protected $fillable= ['nombre', 'id_user', 'descripcion', 'slots'];
     public function productos()
     {
-        return $this->belongsToMany(Productos::class, 'productos_almacenes');
+        return $this->hasMany(Productos::class, 'almacen', 'id');
     }
 }

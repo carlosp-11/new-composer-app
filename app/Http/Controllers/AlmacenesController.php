@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Almacenes;
+use App\Models\Productos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -12,6 +13,7 @@ class AlmacenesController extends Controller
     {
         $userId = auth()->id();
         $almacenes = Almacenes::where('id_user', $userId)
+                              ->withCount('productos')
                               ->orderBy('nombre', 'asc')
                               ->paginate(12);
         return view('pages.almacenes.pizarra', compact('almacenes'));
