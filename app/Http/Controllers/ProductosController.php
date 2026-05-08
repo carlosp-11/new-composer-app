@@ -26,16 +26,17 @@ class ProductosController extends Controller
     public function index()
     {
         $userId = auth()->id();
-        $categorias = Categorias::where('id_user', $userId)->get();            
+        $categorias = Categorias::where('id_user', $userId)->get();
         $almacenes = Almacenes::where('id_user', $userId)->get();
-        $productosCategorias = Productos_has_categorias::all();
-        $imagenes = Images::all();
         $productos = Productos::where('id_user', $userId)
                                 ->orderBy('nombre', 'asc')
                                 ->paginate(12);
+        $productoIds = Productos::where('id_user', $userId)->pluck('id');
+        $productosCategorias = Productos_has_categorias::whereIn('id_producto', $productoIds)->get();
+        $imagenes = Images::whereIn('id_producto', $productoIds)->get();
         return view('pages.productos.pizarra', compact(
-            'productos', 
-            'categorias', 'almacenes', 'productosCategorias', 'imagenes')); 
+            'productos',
+            'categorias', 'almacenes', 'productosCategorias', 'imagenes'));
     }
 
     public function create()
@@ -128,16 +129,18 @@ class ProductosController extends Controller
                                     ->paginate(12);
         }
         $filtro = $request->input('filtro');
-        $categorias = Categorias::where('id_user', $userId)->get();            
+        $categorias = Categorias::where('id_user', $userId)->get();
         $almacenes = Almacenes::where('id_user', $userId)->get();
-        $productosCategorias = Productos_has_categorias::all();
-        
-        
+        $productoIds = Productos::where('id_user', $userId)->pluck('id');
+        $productosCategorias = Productos_has_categorias::whereIn('id_producto', $productoIds)->get();
+        $imagenes = Images::whereIn('id_producto', $productoIds)->get();
+
         $productosHtml = view('panels.productTable')
         ->with('productos', $productos)
         ->with('categorias', $categorias)
         ->with('almacenes', $almacenes)
         ->with('productosCategorias', $productosCategorias)
+        ->with('imagenes', $imagenes)
         ->render();
 
       
@@ -171,14 +174,17 @@ class ProductosController extends Controller
                                     ->where('nombre', 'like', '%' . $request->q . '%')
                                     ->orderBy('nombre', 'asc')
                                     ->paginate(12);
-            $categorias = Categorias::where('id_user', $userId)->get();            
+            $categorias = Categorias::where('id_user', $userId)->get();
             $almacenes = Almacenes::where('id_user', $userId)->get();
-            $productosCategorias = Productos_has_categorias::all();
+            $productoIds = Productos::where('id_user', $userId)->pluck('id');
+            $productosCategorias = Productos_has_categorias::whereIn('id_producto', $productoIds)->get();
+            $imagenes = Images::whereIn('id_producto', $productoIds)->get();
             $productosHtml = view('panels.productTable')
             ->with('productos', $productos)
             ->with('categorias', $categorias)
             ->with('almacenes', $almacenes)
             ->with('productosCategorias', $productosCategorias)
+            ->with('imagenes', $imagenes)
             ->render();
     
           
@@ -200,10 +206,10 @@ class ProductosController extends Controller
         $userId = auth()->id();
         $producto = Productos::findOrFail($id);
         abort_if($producto->id_user !== $userId, 403);
-        $categorias = Categorias::where('id_user', $userId)->get();            
+        $categorias = Categorias::where('id_user', $userId)->get();
         $almacenes = Almacenes::where('id_user', $userId)->get();
         $modo = 'editar';
-        $productosCategorias = Productos_has_categorias::all();
+        $productosCategorias = Productos_has_categorias::where('id_producto', $producto->id)->get();
         $categoriasRelacionadas = $productosCategorias->pluck('id_categoria')->toArray();
         foreach ($categorias as $categoria) {
             $categoria->relationExists = $productosCategorias->contains(function ($value) use ($categoria, $producto) {
@@ -218,10 +224,10 @@ class ProductosController extends Controller
         $userId = auth()->id();
         $producto = Productos::findOrFail($id);
         abort_if($producto->id_user !== $userId, 403);
-        $categorias = Categorias::where('id_user', $userId)->get();            
+        $categorias = Categorias::where('id_user', $userId)->get();
         $almacenes = Almacenes::where('id_user', $userId)->get();
         $modo = 'editar';
-        $productosCategorias = Productos_has_categorias::all();
+        $productosCategorias = Productos_has_categorias::where('id_producto', $producto->id)->get();
         $categoriasRelacionadas = $productosCategorias->pluck('id_categoria')->toArray();
         foreach ($categorias as $categoria) {
             $categoria->relationExists = $productosCategorias->contains(function ($value) use ($categoria, $producto) {
@@ -289,11 +295,11 @@ class ProductosController extends Controller
     public function filterOptions(Request $request)
     {
         $userId = auth()->id();
-        $filtro = $request->query('filtro');       
-        $categorias = Categorias::where('id_user', $userId)->get();            
+        $filtro = $request->query('filtro');
+        $categorias = Categorias::where('id_user', $userId)->get();
         $almacenes = Almacenes::where('id_user', $userId)->get();
-        $productosCategorias = Productos_has_categorias::all();
         $productos = Productos::where('id_user', $userId)->get();
+        $productosCategorias = Productos_has_categorias::whereIn('id_producto', $productos->pluck('id'))->get();
         return view('pages.productos.pizarra', compact('productos', 'categorias', 'almacenes', 'productosCategorias', 'filtro')); 
 
     }
