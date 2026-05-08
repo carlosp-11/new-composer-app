@@ -17,20 +17,31 @@ class DemoDataSeeder extends Seeder
      */
     public function run(): void
     {
-        // Crear usuario demo
+        // Administrador de demostración (gestiona almacenes y categorías)
         $demoUser = User::create([
-            'name' => 'Demo User',
+            'name' => 'Demo Admin',
             'email' => 'demo@inventario.com',
             'email_verified_at' => now(),
             'password' => Hash::make('demo123'),
+            'role' => User::ROLE_ADMIN,
         ]);
 
-        // Crear segundo usuario para mostrar multi-tenancy
+        // Segundo administrador para validar multi-tenancy
         $adminUser = User::create([
             'name' => 'Admin User',
             'email' => 'admin@inventario.com',
             'email_verified_at' => now(),
             'password' => Hash::make('admin123'),
+            'role' => User::ROLE_ADMIN,
+        ]);
+
+        // Operario que sólo registra/escanea productos del Demo Admin
+        $operarioUser = User::create([
+            'name' => 'Operario Demo',
+            'email' => 'operario@inventario.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('operario123'),
+            'role' => User::ROLE_OPERARIO,
         ]);
 
         // Crear almacenes para demo user
@@ -251,8 +262,9 @@ class DemoDataSeeder extends Seeder
         ]);
 
         $this->command->info('✅ Datos de ejemplo creados exitosamente:');
-        $this->command->info('📧 Usuario Demo: demo@inventario.com / demo123');
-        $this->command->info('📧 Usuario Admin: admin@inventario.com / admin123');
+        $this->command->info('📧 Demo Admin: demo@inventario.com / demo123');
+        $this->command->info('📧 Admin tenant 2: admin@inventario.com / admin123');
+        $this->command->info('📧 Operario: operario@inventario.com / operario123');
         $this->command->info('📦 ' . (count($productos) + 1) . ' productos creados');
         $this->command->info('🏢 3 almacenes creados');
         $this->command->info('📋 6 categorías creadas');
