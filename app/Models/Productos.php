@@ -12,7 +12,7 @@ class Productos extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    protected $fillable= ['nombre', 'precio', 'descripcion', 'almacen', 'id_user', 'status'];
+    protected $fillable= ['nombre', 'precio', 'descripcion', 'almacen'];
     
     protected static function boot()
     {
