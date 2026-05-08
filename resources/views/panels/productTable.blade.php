@@ -10,10 +10,7 @@
                             alt="Producto" style="width: 15rem;" 
                         >
                     </a>
-                    @php
-                            $imagenProducto = $imagenes->where('id_producto', $row->id)->first();
-                        @endphp
-                        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#imagenModal">
+                        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#imagenModal-{{ $row->id }}">
                           Ver código QR
                         </button>
                     <div class="card-body">
@@ -59,8 +56,8 @@
                                 <i class="fa-solid fa-pen text-secondary fs-4"></i>
                             </a>
                             <div class="col-6 text-center">
-                                <button type="button" class="btn" data-bs-toggle="modal" 
-                                    data-bs-target="#exampleModal"
+                                <button type="button" class="btn" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal-{{ $row->id }}"
                                 >
                                     <i class="fa-solid fa-trash-can text-secondary fs-4"></i>
                                 </button>
@@ -69,7 +66,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal fade" id="exampleModal" tabindex="-1" 
+            <div class="modal fade" id="exampleModal-{{ $row->id }}" tabindex="-1"
                 aria-labelledby="exampleModalLabel" aria-hidden="true"
             >
                 <div class="modal-dialog">
@@ -104,14 +101,15 @@
                 </div>
             </div>
 
-            <div class="modal fade" id="imagenModal" tabindex="-1" role="dialog" aria-labelledby="imagenModalLabel" aria-hidden="true">
+            <div class="modal fade" id="imagenModal-{{ $row->id }}" tabindex="-1" role="dialog" aria-labelledby="imagenModalLabel-{{ $row->id }}" aria-hidden="true">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-body text-center">
-                    <img src="{{$imagenProducto->url ?? asset('img/pack.png')}}" alt="Código QR del producto" id="imagenProducto" class="img-fluid">
+                    <img src="{{ route('producto.qr.svg', $row->id) }}" alt="Código QR de {{ $row->nombre }}" class="img-fluid" loading="lazy">
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Regresar</button>
+                    <a href="{{ route('producto.qr.png', $row->id) }}" download="qr-{{ $row->id }}.png" class="btn btn-outline-secondary">Descargar PNG</a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                   </div>
                 </div>
               </div>
