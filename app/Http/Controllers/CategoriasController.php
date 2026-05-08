@@ -38,8 +38,8 @@ class CategoriasController extends Controller
             $nuevaCategoria = new Categorias([
                 'nombre' => $request->nombre,
                 'descripcion' => $request->descripcion,
-                'id_user' => $userId,
             ]);
+            $nuevaCategoria->id_user = $userId;
             $nuevaCategoria->save();            
             DB::commit();
             Session::increment('numCategorias');            
@@ -58,7 +58,8 @@ class CategoriasController extends Controller
     public function edit(string $id)
     {
         $categoria = Categorias::findOrFail($id);
-        $modo = 'editar';        
+        abort_if($categoria->id_user !== auth()->id(), 403);
+        $modo = 'editar';
         return view('pages.categorias.formulario', compact('categoria', 'modo'));
     }
 
@@ -66,14 +67,16 @@ class CategoriasController extends Controller
     {
         $request->validate([
             'nombre' => 'required|min:3|max:50',
+            'descripcion' => 'nullable|string|max:255',
         ]);
         DB::beginTransaction();
 
-        try {        
+        try {
             $categoriaEditada = Categorias::findOrFail($id);
-            $categoriaEditada->fill($request->input())->save();            
-            DB::commit();  
-            return redirect('/categorias')->with('success', 'Categoria actualizada correctamente');
+            abort_if($categoriaEditada->id_user !== auth()->id(), 403);
+            $categoriaEditada->fill($request->only(['nombre', 'descripcion']))->save();
+            DB::commit();
+            return redirect('/categorias')->with('success', 'Categoría actualizada correctamente');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Error en la actualización de la categoría: ' . $e->getMessage());
@@ -84,6 +87,7 @@ class CategoriasController extends Controller
     {
         try {
             $categoria = Categorias::findOrFail($id);
+            abort_if($categoria->id_user !== auth()->id(), 403);
             $categoria->delete();
             Session::decrement('numCategorias');
             return redirect('/categorias')->with('success', 'Categoría eliminada correctamente');

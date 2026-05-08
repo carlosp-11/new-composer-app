@@ -38,8 +38,8 @@ class AlmacenesController extends Controller
                 'nombre' => $request->nombre,
                 'descripcion' => $request->descripcion,
                 'slots' => $request->slots,
-                'id_user' => $userId,
             ]);
+            $nuevoAlmacen->id_user = $userId;
             $nuevoAlmacen->save();            
             DB::commit();     
             Session::increment('numAlmacenes');       
@@ -58,6 +58,7 @@ class AlmacenesController extends Controller
     public function edit(string $id)
     {
         $almacen = Almacenes::findOrFail($id);
+        abort_if($almacen->id_user !== auth()->id(), 403);
         $modo ='editar';
         return view('pages.almacenes.formulario',compact('almacen', 'modo'));
     }
@@ -66,13 +67,16 @@ class AlmacenesController extends Controller
     {
         $request->validate([
             'nombre' => 'required|min:3|max:50',
+            'descripcion' => 'nullable|string|max:255',
+            'slots' => 'nullable|integer|min:1|max:9999',
         ]);
         DB::beginTransaction();
 
-        try {          
+        try {
             $almacen = Almacenes::findOrFail($id);
-            $almacen->fill($request->input())->save();            
-            DB::commit();  
+            abort_if($almacen->id_user !== auth()->id(), 403);
+            $almacen->fill($request->only(['nombre', 'descripcion', 'slots']))->save();
+            DB::commit();
             return redirect('/almacenes')->with('success', 'Almacén actualizado correctamente');
         } catch (\Exception $e) {
             DB::rollBack();
@@ -84,6 +88,7 @@ class AlmacenesController extends Controller
     {
         try {
             $almacen = Almacenes::findOrFail($id);
+            abort_if($almacen->id_user !== auth()->id(), 403);
             $almacen->delete();
             Session::decrement('numAlmacenes');
             return redirect('/almacenes')->with('success', 'Almacén eliminado correctamente');

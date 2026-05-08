@@ -58,9 +58,8 @@ class ProductosController extends Controller
                 'precio' => $request->precio,
                 'descripcion' => $request->descripcion,
                 'almacen' => $request->almacen,
-                'id_user' => $userId,
             ]);
-
+            $producto->id_user = $userId;
             $producto->save();
 
             $idProducto = $producto->id;
@@ -94,32 +93,37 @@ class ProductosController extends Controller
             if($request->termino != 'null'){
                 $idProductos = Productos_has_categorias::where('id_categoria', $request->termino)
                 ->pluck('id_producto');
-                $productos = Productos::whereIn('id', $idProductos)
+                $productos = Productos::where('id_user', $userId)
+                                        ->whereIn('id', $idProductos)
                                         ->orderBy('nombre', 'asc')
                                         ->paginate(12);
             }
             if ($request->termino == 'null') {
                 $idProductos = Productos_has_categorias::pluck('id_producto');
-                $productos = Productos::whereNotIn('id', $idProductos)
+                $productos = Productos::where('id_user', $userId)
+                                        ->whereNotIn('id', $idProductos)
                                         ->orderBy('nombre', 'asc')
                                         ->paginate(12);
             }
-            
+
         }
-        if ($request->filtro === 'almacen'){             
+        if ($request->filtro === 'almacen'){
              if($request->termino != 'null'){
-                $productos = $request->filtro == 'almacen'? Productos::where('almacen', $request->termino) 
+                $productos = $request->filtro == 'almacen'? Productos::where('id_user', $userId)
+                                                                        ->where('almacen', $request->termino)
                                                                         ->orderBy('nombre', 'asc')
                                                                         ->paginate(12) : '' ;
              }
              if($request->termino == 'null'){
-                $productos = $request->filtro == 'almacen' ? Productos::whereNull('almacen') 
+                $productos = $request->filtro == 'almacen' ? Productos::where('id_user', $userId)
+                                                                        ->whereNull('almacen')
                                                                         ->orderBy('nombre', 'asc')
                                                                         ->paginate(12) : '';
              }
         }
         } else {
-            $productos = Productos::where('nombre', 'like', '%' . $request->termino . '%') 
+            $productos = Productos::where('id_user', $userId)
+                                    ->where('nombre', 'like', '%' . $request->termino . '%')
                                     ->orderBy('nombre', 'asc')
                                     ->paginate(12);
         }
@@ -160,10 +164,11 @@ class ProductosController extends Controller
     //return view('pages.productos.pizarra', compact('productos', 'almacenes', 'categorias', 'productosCategorias'));
     }
 
-    public function display (Request $request) 
+    public function display (Request $request)
     {
             $userId = auth()->id();
-            $productos = Productos::where('nombre', 'like', '%' . $request->q . '%') 
+            $productos = Productos::where('id_user', $userId)
+                                    ->where('nombre', 'like', '%' . $request->q . '%')
                                     ->orderBy('nombre', 'asc')
                                     ->paginate(12);
             $categorias = Categorias::where('id_user', $userId)->get();            
@@ -193,7 +198,8 @@ class ProductosController extends Controller
     public function edit(string $id)
     {
         $userId = auth()->id();
-        $producto = Productos::findOrFail($id);        
+        $producto = Productos::findOrFail($id);
+        abort_if($producto->id_user !== $userId, 403);
         $categorias = Categorias::where('id_user', $userId)->get();            
         $almacenes = Almacenes::where('id_user', $userId)->get();
         $modo = 'editar';
@@ -210,7 +216,8 @@ class ProductosController extends Controller
     public function detail(string $id)
     {
         $userId = auth()->id();
-        $producto = Productos::findOrFail($id);        
+        $producto = Productos::findOrFail($id);
+        abort_if($producto->id_user !== $userId, 403);
         $categorias = Categorias::where('id_user', $userId)->get();            
         $almacenes = Almacenes::where('id_user', $userId)->get();
         $modo = 'editar';
@@ -226,13 +233,14 @@ class ProductosController extends Controller
     }
 
     public function update(Request $request, string $id)
-    { 
+    {
         $this->validateData($request);
         DB::beginTransaction();
         $userId = auth()->id();
-        try{            
+        try{
             $producto = Productos::findOrFail($id);
-            $producto->fill($request->input())->save();
+            abort_if($producto->id_user !== $userId, 403);
+            $producto->fill($request->only(['nombre', 'precio', 'descripcion', 'almacen']))->save();
             $categoriasIds = $request->input('categorias');
 
             Productos_has_categorias::where('id_producto', $id)
@@ -258,6 +266,7 @@ class ProductosController extends Controller
     {
         try {
             $producto = Productos::findOrFail($id);
+            abort_if($producto->id_user !== auth()->id(), 403);
             $productosCategorias = Productos_has_categorias::where('id_producto', $id)->delete();
             $producto->delete();
             Session::decrement('numProductos');
@@ -345,16 +354,25 @@ class ProductosController extends Controller
 
     public function updateStatus(Request $request){
 
-        try {
-        $estado = new Estados([
-            'id_producto' =>  $request->id_producto,
-            'descripcion' => $request->descripcion,
-            'status' => $request->status,
+        $request->validate([
+            'id_producto' => 'required|integer|exists:productos,id',
+            'status' => 'required|in:en stock,despachado,en transito,con incidencia',
+            'descripcion' => 'nullable|string|max:255',
         ]);
-        $estado->save();
-        return redirect('/productos')->with('success', 'Status del producto actualizado correctamente'); 
+
+        try {
+            $producto = Productos::findOrFail($request->id_producto);
+            abort_if($producto->id_user !== auth()->id(), 403);
+
+            $estado = new Estados([
+                'id_producto' => $request->id_producto,
+                'descripcion' => $request->descripcion,
+                'status' => $request->status,
+            ]);
+            $estado->save();
+            return redirect('/productos')->with('success', 'Estado del producto actualizado correctamente');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Error al subir archivo: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Error al actualizar estado: ' . $e->getMessage());
         }
     }
 

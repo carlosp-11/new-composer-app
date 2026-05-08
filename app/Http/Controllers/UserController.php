@@ -91,7 +91,7 @@ class UserController extends Controller
            
             Auth::login($nuevoUsuario);
 
-            return redirect('/')->with('success', 'Usuario registirado correctamente');
+            return redirect('/')->with('success', 'Usuario registrado correctamente');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Error en el registro del usuario: ' . $e->getMessage());
@@ -126,11 +126,14 @@ class UserController extends Controller
             }
     }
 
-    public function logout() {
+    public function logout(Request $request) {
+        $user = Auth::user();
+        if ($user) {
+            $user->tokens()->delete();
+        }
         Auth::logout();
-        Session::put('numAlmacenes', 0);
-        Session::put('numProductos', 0);
-        Session::put('numCategorias', 0);
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
         return redirect('/login')->with('success', 'Sesión cerrada correctamente');
     }
 

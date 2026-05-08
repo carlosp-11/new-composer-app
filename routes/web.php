@@ -63,10 +63,10 @@ Route::delete('categorias/{id}', [CategoriasController::class, 'destroy'])->midd
 
 //Rutas de Login/Signup
 Route::get('/login', [UserController::class, 'index'])->name('login');
-Route::post('/login', [UserController::class, 'authenticate']);
+Route::post('/login', [UserController::class, 'authenticate'])->middleware('throttle:5,1');
 Route::post('/logout', [UserController::class, 'logout']);
 Route::get('/signup', [UserController::class, 'create']);
-Route::post('/signup', [UserController::class, 'store']);
+Route::post('/signup', [UserController::class, 'store'])->middleware('throttle:3,1');
 Route::get('/forgot-password', function () {
     return view('auth.forgot-password');
 })->middleware('guest')->name('password.request');
@@ -77,9 +77,9 @@ Route::get('/private', [UserController::class, 'show'])->middleware('auth');
 Route::post('/private', [UserController::class, 'sendWelcomeEmail'])->name('enviar-bienvenida');
 Route::delete('/private', [UserController::class, 'destroy'])->middleware('auth');
 
-Route::get('/getQRCode', [APIController::class, 'getQRCode'])->middleware('auth');;
-Route::get('/images/{id}', [APIController::class, 'showImage'])->middleware('auth');;
+Route::get('/getQRCode', [APIController::class, 'getQRCode'])->middleware(['auth', 'throttle:10,1']);
+Route::get('/images/{id}', [APIController::class, 'showImage'])->middleware('auth');
 
 Route::get('/qrscanner', function () {
     return view('pages.qrscanner.qrscanner');
-});
+})->middleware('auth');
