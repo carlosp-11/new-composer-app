@@ -86,7 +86,8 @@ class UserController extends Controller
                 'email' => $request->email,
                 'password' => $request->password,
             ]);
-            $nuevoUsuario->save();            
+            $nuevoUsuario->role = User::ROLE_ADMIN;
+            $nuevoUsuario->save();
             DB::commit();           
            
             Auth::login($nuevoUsuario);
