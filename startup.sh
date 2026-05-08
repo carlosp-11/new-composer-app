@@ -41,9 +41,9 @@ php artisan cache:clear
 php artisan route:clear
 php artisan view:clear
 
-# Ejecutar migraciones desde cero - CRÍTICO
-echo "📊 ===== EJECUTANDO MIGRACIONES FRESCAS ====="
-php artisan migrate:fresh --force
+# Aplicar migraciones pendientes (no destructivo)
+echo "📊 ===== APLICANDO MIGRACIONES PENDIENTES ====="
+php artisan migrate --force
 
 # Verificar que las tablas se crearon
 echo "🔍 Verificando tablas creadas..."
@@ -63,9 +63,20 @@ if (in_array('users', \$tables)) {
 }
 "
 
-# Ejecutar seeders
-echo "🌱 Ejecutando seeders..."
-php artisan db:seed --force
+# Ejecutar seeders solo si la tabla users está vacía (primer arranque)
+echo "🌱 Verificando si se necesitan seeders..."
+USERS_COUNT=$(php -r "
+\$pdo = new PDO('sqlite:/var/www/html/database/production.sqlite');
+\$stmt = \$pdo->query('SELECT COUNT(*) FROM users');
+echo \$stmt->fetchColumn();
+" 2>/dev/null || echo "0")
+
+if [ "$USERS_COUNT" = "0" ]; then
+    echo "🌱 Base de datos vacía. Ejecutando seeders iniciales..."
+    php artisan db:seed --force
+else
+    echo "✅ Base de datos ya inicializada ($USERS_COUNT usuarios). Omitiendo seeders."
+fi
 
 # Verificar usuarios demo
 echo "👥 Verificando usuarios demo..."
