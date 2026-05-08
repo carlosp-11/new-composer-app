@@ -4,10 +4,8 @@ services:
     env: docker
     dockerfile: ./Dockerfile
     plan: free  # o starter, standard, etc.
-    buildCommand: |
-      composer install --optimize-autoloader --no-dev
-      npm install
-      npm run build
+    autoDeployTrigger: checksPass
+    healthCheckPath: /healthz
     startCommand: apache2-foreground
     domains:
       - c-depot.onrender.com
