@@ -1,86 +1,56 @@
 @extends('layouts.home')
 
-@section('title', $modo == 'login' ? 'INGRESAR' : 'REGISTRARSE')
+@section('title', $modo === 'login' ? 'Iniciar sesión' : 'Crear cuenta')
 
 @section('content')
-<div class="m-0 p-0 animated fadeInDown mb-5 pb-5">
-    <div class="row mt-5 mx-0 align-items-center gx-4 gy-5">
-        <div class= " col-12 col-lg-6 z-0">
-            <div class="row gx-3 justify-content-center">
-                <div class="col-auto align-self-center">
-                    <img class="rotating-image " 
-                        src="{{ asset('img/cd_icon.png') }}" alt="C"
-                        style="max-width: 5rem; height: auto;"   
-                    >
-                </div>
-                <div class="col-auto align-self-center">
-                    <img class="img-fluid" 
-                        src="{{ asset('img/depot_letter.png') }}" alt="DEPOT"
-                        style="max-width: 18rem;"
-                    >
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-lg-6 ">
-            <div class="row justify-content-center px-3 mt-5">           
-                <div class="shadow card mb-3" style="max-width: 600px;">
-                    <div class="row g-0">
-                        <div class="col ">
-                            <div class="card-body pe-3">    
-                                <form action="{{ $modo == 'login' ? url('/login') : url('/signup') }}" 
-                                    method="POST" class="py-3 px-0" id="formulario"
-                                >
-                                    @csrf            
-                                    <div class="my-3 form-floating">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                                        <input type="email" class="form-control  fs-6 fw-light" 
-                                            id="email" name="email" placeholder="Correo electrónico"
-                                        >
-                                        <label class="fs-6 fw-light" for="email">Correo electrónico</label>
-                                    </div>
-                                    <div class="mb-3 form-floating">
-                                        <input type="password" class="form-control py-2 fs-6 fw-light" 
-                                            id="password" name="password" placeholder="Contraseña"
-                                        >
-                                        <label class="fs-6 fw-light" for="password">Contraseña</label>
-                                        <div id="passwordHelpBlock" 
-                                            class="form-text {{ $modo == 'login'? 'd-none' : ''}}" 
-                                            style='text-align:justify'
-                                        >
-                                            Tu contraseña debe tener al menos 8 caracteres. 
-                                            Puede contener letras números o caracteres especiales, 
-                                            pero no debe contener espacios en blanco ni emojis.
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary w-100 
-                                        my-2 fw-semibold py-2 fs-5 bg-gradient"
-                                        >
-                                        {{$modo== 'login'? 'Ingresar':'Registrarse'  }}
-                                    </button>
-                                    <div class="text-center mt-3">
-                                        <a class="text-decoration-none d-none" href="#"> 
-                                            ¿Has olvidado la contraseña? 
-                                        </a>      
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="card-footer bg-transparent border-tertiary">
-                                <div class="text-center py-3">
-                                    <a href="{{ $modo == 'login'? url('/signup') : url('/') }}" 
-                                        class=" {{$modo== 'login'? 'btn btn-success':'btn btn-secondary' }} 
-                                        w-75 fw-semibold py-2 fs-6 bg-gradient"
-                                    > 
-                                        {{$modo== 'login'? 'Crea una cuenta nueva':'Volver'  }}
-                                    </a> 
-                                </div> 
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<section class="w-full max-w-md">
+    <header class="text-center mb-6">
+        <h1 class="text-2xl sm:text-3xl font-semibold text-ink-950">
+            {{ $modo === 'login' ? 'Iniciar sesión' : 'Crear cuenta' }}
+        </h1>
+        <p class="mt-2 text-sm text-ink-500">
+            {{ $modo === 'login'
+                ? 'Accede a tus almacenes, productos y códigos QR.'
+                : 'Crea tu cuenta para empezar a gestionar tu almacén.' }}
+        </p>
+    </header>
+
+    <x-card>
+        <form action="{{ $modo === 'login' ? url('/login') : url('/signup') }}" method="POST" class="space-y-4" id="formulario">
+            @csrf
+
+            <div>
+                <label class="label" for="email">Correo electrónico</label>
+                <input type="email" class="input" id="email" name="email"
+                       placeholder="tu@empresa.com"
+                       autocomplete="email" required value="{{ old('email') }}">
             </div>
 
-            
-        </div>
-    </div>
-</div>
+            <div>
+                <label class="label" for="password">Contraseña</label>
+                <input type="password" class="input" id="password" name="password"
+                       autocomplete="{{ $modo === 'login' ? 'current-password' : 'new-password' }}" required>
+                @if($modo !== 'login')
+                    <p class="mt-1.5 text-xs text-ink-500">
+                        Mínimo 8 caracteres, sin espacios. Puedes usar letras, números y símbolos.
+                    </p>
+                @endif
+            </div>
+
+            <button type="submit" class="btn-primary btn-lg w-full">
+                {{ $modo === 'login' ? 'Iniciar sesión' : 'Crear cuenta' }}
+            </button>
+        </form>
+    </x-card>
+
+    <p class="mt-5 text-center text-sm text-ink-500">
+        @if($modo === 'login')
+            ¿Aún no tienes cuenta?
+            <a href="{{ url('/signup') }}" class="font-medium text-brand-600 hover:underline">Crear cuenta</a>
+        @else
+            ¿Ya tienes cuenta?
+            <a href="{{ url('/login') }}" class="font-medium text-brand-600 hover:underline">Iniciar sesión</a>
+        @endif
+    </p>
+</section>
 @endsection
