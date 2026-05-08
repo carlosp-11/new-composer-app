@@ -23,6 +23,12 @@ use Illuminate\Http\Request;
 |
 */
 
+// Health check: 200 OK ligero usado por keep-alive y monitoring.
+Route::get('/healthz', fn () => response('ok', 200, [
+    'Content-Type' => 'text/plain',
+    'X-Robots-Tag' => 'noindex, nofollow',
+]))->name('healthz');
+
 //Ruta de Home - Redirige a login si no está autenticado
 Route::get('/', function() {
     if (auth()->check()) {
