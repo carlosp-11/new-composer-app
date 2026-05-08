@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use App\Models\Images;
+use App\Models\Productos;
 
 class APIController extends Controller
 {
@@ -34,11 +35,12 @@ class APIController extends Controller
     }
 
     public function showImage($id)
-        {
-            $image = Images::findOrFail($id);
+    {
+        $image = Images::findOrFail($id);
+        $producto = Productos::findOrFail($image->id_producto);
+        abort_if($producto->id_user !== auth()->id(), 403);
 
-            // Devolver la imagen como respuesta HTTP
-            return response($image->data)->header('Content-Type', $image->mime_type);
-        }
+        return redirect($image->url);
+    }
 
 }
