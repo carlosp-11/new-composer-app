@@ -1,0 +1,32 @@
+name: Keep Render awake
+
+# Render free tier duerme la app tras ~15 min sin tráfico.
+# Hacemos un ping ligero cada 10 min en horas laborales (UTC 06:00-22:59 ≈ 08:00-00:59 CET).
+# /healthz es un endpoint sin BD ni auth — coste mínimo en cómputo.
+
+on:
+  schedule:
+    - cron: '*/10 6-22 * * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping /healthz
+        run: |
+          URL="${KEEP_ALIVE_URL:-https://c-depot.onrender.com/healthz}"
+          echo "Pinging $URL"
+          for i in 1 2 3; do
+            STATUS=$(curl -s -o /tmp/body -w "%{http_code}" --max-time 30 "$URL" || echo "000")
+            echo "Attempt $i — status $STATUS"
+            if [ "$STATUS" = "200" ]; then
+              cat /tmp/body
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "Ping failed after 3 attempts"
+          exit 1
+        env:
+          KEEP_ALIVE_URL: ${{ vars.KEEP_ALIVE_URL }}

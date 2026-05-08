@@ -31,4 +31,13 @@ class SmokeTest extends TestCase
         $this->get('/categorias')->assertRedirect('/login');
         $this->get('/qrscanner')->assertRedirect('/login');
     }
+
+    public function test_healthz_returns_ok_without_auth(): void
+    {
+        $response = $this->get('/healthz');
+
+        $response->assertOk();
+        $this->assertSame('ok', $response->getContent());
+        $response->assertHeader('X-Robots-Tag', 'noindex, nofollow');
+    }
 }
