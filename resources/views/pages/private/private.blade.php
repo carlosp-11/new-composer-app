@@ -1,116 +1,77 @@
 @extends('layouts.main')
 
-@section('title', 'AREA PERSONAL')
+@section('title', 'Mi cuenta')
 
 @section('content')
+<section class="px-4 sm:px-6 py-6 max-w-3xl mx-auto space-y-5">
+    <header>
+        <h1 class="text-2xl sm:text-3xl font-semibold text-ink-950 tracking-tight">Mi cuenta</h1>
+        <p class="mt-1 text-sm text-ink-500">Datos personales y resumen de tu actividad.</p>
+    </header>
 
-    <div class="mt-5 px-0 mx-0">  
-        <div class="row m-0 p-0 g-5 ">
-            <div class="col">
-            <div class="card mx-auto animated fadeInUp  bg-gradient bg-light shadow" style="min-width:15rem">
-                    <a class="bg-secondary  bg-gradient bg-opacity-50 text-center rounded-top border border-light" 
-                        href="#"
-                    > 
-                        <img src="{{ asset('img/centro-de-distribucion.png') }}"  
-                            class="card-img-top " 
-                            alt="Almacen" style="width: 15rem;" 
-                        />
-                    </a>
-                    <div class="card-body">
-                        <a class="text-decoration-none " href="/almacenes"> 
-                            <h5 class="card-title pb-2">  ALMACENES </h5>
-                        </a>
-                        <p class="card-text align-self-center">
-                        TOTAL Almacenes: {{$numeroAlmacenes}}
-                        </p>      
-                    </div>
+    <x-card>
+        <h2 class="text-base font-semibold text-ink-950 mb-4">Datos de la cuenta</h2>
+        <dl class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+            <div>
+                <dt class="text-xs font-medium text-ink-500 uppercase tracking-wide">Correo electrónico</dt>
+                <dd class="mt-1 text-ink-950 break-all">{{ $correoElectronico }}</dd>
+            </div>
+            <div>
+                <dt class="text-xs font-medium text-ink-500 uppercase tracking-wide">Rol</dt>
+                <dd class="mt-1">
+                    <span class="chip">{{ auth()->user()?->isAdmin() ? 'Administrador' : 'Operario' }}</span>
+                </dd>
+            </div>
+            <div class="sm:col-span-2">
+                <dt class="text-xs font-medium text-ink-500 uppercase tracking-wide">Cuenta creada</dt>
+                <dd class="mt-1 text-ink-950 tabular-nums">{{ $fechaCreacion }}</dd>
+            </div>
+        </dl>
+    </x-card>
+
+    @admin
+        <x-card>
+            <h2 class="text-base font-semibold text-ink-950 mb-4">Resumen</h2>
+            <div class="grid grid-cols-3 gap-4">
+                <div class="text-center">
+                    <p class="text-2xl sm:text-3xl font-semibold text-ink-950 tabular-nums">{{ $numeroAlmacenes }}</p>
+                    <p class="mt-1 text-xs text-ink-500 uppercase tracking-wide">Almacenes</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-2xl sm:text-3xl font-semibold text-ink-950 tabular-nums">{{ $numeroCategorias }}</p>
+                    <p class="mt-1 text-xs text-ink-500 uppercase tracking-wide">Categorías</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-2xl sm:text-3xl font-semibold text-ink-950 tabular-nums">{{ $numeroProductos }}</p>
+                    <p class="mt-1 text-xs text-ink-500 uppercase tracking-wide">Productos</p>
                 </div>
             </div>
+        </x-card>
+    @endadmin
 
-            <div class="col-md-6">
-                <div class = "card border-dark mb-3 bg-primary bg-gradient shadow mx-auto animated fadeIn px-2 py-3" 
-                    style = "width:22rem"
-                >
-                    <a class=" text-decoration-none " href="/almacenes">
-                        <div class="row g-0 align-items-center">
-                            <div class="col-5 text-center">
-                                <h4 class="text-white fw-light text-nowrap "> ALMACENES </h4>
-                            </div>
-                            <div class="col-7 justify-content-center text-center">
-                                <img src="{{ asset('img/centro-de-distribucion.png') }}" 
-                                    class="bg-primary bg-gradient" 
-                                    alt="gestionar almacén" style="max-height:44px"
-                                >
-                            </div>
-                            <p class="col card-text align-self-center"> TOTAL Almacenes: {{$numeroAlmacenes}}</p>
-
-                        </div>
-                    </a>    
+    <x-card>
+        <h2 class="text-base font-semibold text-ink-950 mb-4">Acciones</h2>
+        <div class="space-y-3">
+            <form method="POST" action="{{ route('enviar-bienvenida') }}" class="flex flex-wrap items-center justify-between gap-3">
+                @csrf
+                <div class="min-w-0 flex-1">
+                    <p class="text-sm font-medium text-ink-950">Reenviar email de bienvenida</p>
+                    <p class="text-xs text-ink-500">Te enviaremos los pasos básicos para empezar.</p>
                 </div>
-            </div>
+                <button type="submit" class="btn-secondary btn-sm">Enviar</button>
+            </form>
 
-
-    <div class="row ">
-        <div class="col">            
-            <div class="card mb-3" style="width: 600px;">
-                <div class="row g-0">
-                    <div class="col">
-                        <div class="card-body mx-2">   
-                            <div class="row justify-content-between py-1">                               
-                                <p class="col card-text align-self-center"> TOTAL Almacenes: {{$numeroAlmacenes}}</p>
-                                <a href="#" class=" col btn btn-secondary align-self-center">Borrar todos los almacenes</a>
-                            </div>
-                            <div class="row justify-content-between py-1">
-                                <p class="col card-text align-self-center"> TOTAL Categorías: {{$numeroCategorias}}</p>
-                                <a href="#" class="col btn btn-secondary align-self-center">Borrar todos las categorías</a>
-                            </div>
-                            <div class="row justify-content-between py-1">
-                                <p class="col card-text align-self-center"> TOTAL Productos: {{$numeroProductos}}</p>
-                                <a href="#" class="col btn btn-secondary align-self-center">Borrar todos los productos</a>
-                            </div>
-                        </div>
-                    </div>
+            <div class="border-t border-line pt-3 flex flex-wrap items-center justify-between gap-3">
+                <div class="min-w-0 flex-1">
+                    <p class="text-sm font-medium text-ink-950">Cerrar sesión</p>
+                    <p class="text-xs text-ink-500">Tendrás que volver a iniciar sesión para acceder.</p>
                 </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="row ">
-        <div class="col">            
-            <div class="card mb-3" style="width: 600px;">
-                <div class="row g-0">
-                    <div class="col">
-                        <div class="card-body">
-                            <div class="justify-content-between d-flex">
-                                <span class="d-flex">
-                                    <h5 class="card-title"> Cuenta: </h5>
-                                    <p class="ms-2"> {{$correoElectronico}}</p>
-                                </span>  
-                                <span>
-                                    <span>creada el:
-                                        
-                                    </span> {{$fechaCreacion}}
-                                </span>
-                            </div>
-                            <div class="row justify-content-between px-2">
-                                <a href="#" class="btn btn-secondary col-11 col-md-4 my-1 py-2"> Cambiar contraseña </a>
-                                <a href="#" class="btn btn-danger col-12 col-md-4 my-1 py-2"> Darse de baja </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <form method="POST" action="{{ url('/logout') }}">
+                    @csrf
+                    <button type="submit" class="btn-secondary btn-sm">Cerrar sesión</button>
+                </form>
             </div>
         </div>
-    </div>
-
-    <div style="text-align: center; margin-top: 50px;">
-        <h1>Enviar Correo de Bienvenida</h1>
-        <form method="POST" action="{{ route('enviar-bienvenida') }}">
-            @csrf
-            <button type="submit" style="padding: 10px 20px; background-color: #007bff; color: #fff; border: none; cursor: pointer; border-radius: 5px;">Enviar Correo de Bienvenida</button>
-        </form>
-    </div>
-    
-</div>
+    </x-card>
+</section>
 @endsection
