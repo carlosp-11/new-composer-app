@@ -47,12 +47,11 @@ RUN mkdir -p /var/www/html/database && \
     chmod -R 775 /var/www/html/bootstrap/cache && \
     chmod 664 /var/www/html/database/production.sqlite
 
-# Limpiar y reinstalar dependencias PHP con versión correcta
-RUN rm -f composer.lock && \
-    composer install --optimize-autoloader --no-dev
+# Instalar dependencias PHP desde el lock para builds reproducibles
+RUN composer install --optimize-autoloader --no-dev --no-interaction
 
 # Instalar dependencias Node.js y compilar assets
-RUN npm install && npm run build
+RUN npm ci && npm run build
 
 # Configurar Laravel (sin cache para debugging)
 # RUN php artisan config:cache && \
