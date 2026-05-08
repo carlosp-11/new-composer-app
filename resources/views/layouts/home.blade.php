@@ -9,7 +9,6 @@
     <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700&display=swap" rel="stylesheet">
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
-    <link rel="icon" type="image/svg+xml" href="{{ asset('img/favicon.svg') }}">
     <link rel="icon" type="image/png" href="{{ asset('img/cd_icon_mini.png') }}">
     <title>C-DEPOT — @yield('title')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
