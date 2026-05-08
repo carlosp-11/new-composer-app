@@ -8,6 +8,7 @@ use App\Http\Controllers\AlmacenesController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\APIController;
+use App\Http\Controllers\QrCodeController;
 use Illuminate\Http\Request;
 
 
@@ -44,6 +45,8 @@ Route::get('productos/{id}/editar', [ProductosController::class, 'edit'])->middl
 Route::put('productos/{id}/editar', [ProductosController::class, 'update'])->middleware('auth');;
 //Route::get('productos/{id}', [ProductosController::class, 'display'])->middleware('auth');;
 Route::delete('productos/{id}', [ProductosController::class, 'destroy'])->middleware('auth');;
+Route::get('productos/{id}/qr.svg', [QrCodeController::class, 'svg'])->middleware('auth')->name('producto.qr.svg');
+Route::get('productos/{id}/qr.png', [QrCodeController::class, 'png'])->middleware('auth')->name('producto.qr.png');
 
 //Rutas de Almacenes
 Route::get('/almacenes', [AlmacenesController::class, 'index'])->middleware('auth');;
@@ -77,7 +80,6 @@ Route::get('/private', [UserController::class, 'show'])->middleware('auth');
 Route::post('/private', [UserController::class, 'sendWelcomeEmail'])->name('enviar-bienvenida');
 Route::delete('/private', [UserController::class, 'destroy'])->middleware('auth');
 
-Route::get('/getQRCode', [APIController::class, 'getQRCode'])->middleware(['auth', 'throttle:10,1']);
 Route::get('/images/{id}', [APIController::class, 'showImage'])->middleware('auth');
 
 Route::get('/qrscanner', function () {
