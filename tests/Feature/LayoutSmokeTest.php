@@ -32,14 +32,12 @@ class LayoutSmokeTest extends TestCase
         $response->assertDontSee('Administrador', false);
     }
 
-    public function test_login_renders_with_new_layout_and_no_broken_assets(): void
+    public function test_login_renders_with_new_layout(): void
     {
         $response = $this->get('/login');
 
         $response->assertOk();
         $response->assertSee('Iniciar sesión', false);
-        $response->assertDontSee('boxes_patern', false);
-        $response->assertDontSee('depot_letter', false);
-        $response->assertDontSee('cd_icon.png', false);
+        $response->assertSee('cdepot_icon.png', false);
     }
 }

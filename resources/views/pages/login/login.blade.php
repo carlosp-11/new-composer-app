@@ -5,6 +5,10 @@
 @section('content')
 <section class="w-full max-w-md">
     <header class="text-center mb-6">
+        <div class="flex items-center justify-center gap-3 mb-4">
+            <img src="{{ asset('img/cd_icon.png') }}" alt="C" style="height: 4rem; width: auto;">
+            <img src="{{ asset('img/depot_letter.png') }}" alt="DEPOT" style="height: 2.25rem; width: auto;">
+        </div>
         <h1 class="text-2xl sm:text-3xl font-semibold text-ink-950">
             {{ $modo === 'login' ? 'Iniciar sesión' : 'Crear cuenta' }}
         </h1>

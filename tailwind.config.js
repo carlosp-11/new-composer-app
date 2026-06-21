@@ -31,9 +31,9 @@ export default {
                 elevated: '#F5F5F1',
 
                 brand: {
-                    50: '#ECF3EF',
-                    500: '#2A6650',
-                    600: '#1F4D3A',
+                    50: '#cfe2ff',
+                    500: '#3d8bfd',
+                    600: '#0d6efd',
                 },
                 accent: {
                     50: '#FFF3EC',
