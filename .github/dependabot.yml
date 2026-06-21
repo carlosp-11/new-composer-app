@@ -1,0 +1,134 @@
+# .github/dependabot.yml
+# Configuración Dependabot para proyectos Astro / React / Next / cualquier stack con pnpm/npm.
+# Documentación oficial: https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+#
+# Comportamiento:
+# - Dependabot abre PRs automáticos cuando hay versiones nuevas.
+# - Cada PR pasa por el workflow CI (ci.yml + dependabot-auto-test.yml).
+# - Si los checks pasan: el workflow auto-test añade un label "ready-to-merge"
+#   y opcionalmente auto-mergea (configurable).
+# - El usuario aprueba el PR en GitHub UI con 1 click (branch protection).
+
+version: 2
+updates:
+  # ─────────────────────────────────────────────────────────────
+  # Dependencias npm / pnpm (Astro, React, Next, etc.)
+  # ─────────────────────────────────────────────────────────────
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Europe/Madrid"
+    open-pull-requests-limit: 5
+    versioning-strategy: increase
+    target-branch: "dev"  # PRs van a dev, no a main directamente
+    labels:
+      - "deps"
+      - "automated"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+    groups:
+      # Agrupar minor + patch en un solo PR por categoría (menos ruido)
+      astro-ecosystem:
+        patterns:
+          - "astro"
+          - "@astrojs/*"
+        update-types:
+          - "minor"
+          - "patch"
+      preact-ecosystem:
+        patterns:
+          - "preact"
+          - "@preact/*"
+        update-types:
+          - "minor"
+          - "patch"
+      react-ecosystem:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react*"
+        update-types:
+          - "minor"
+          - "patch"
+      tailwind:
+        patterns:
+          - "tailwindcss"
+          - "@tailwindcss/*"
+        update-types:
+          - "minor"
+          - "patch"
+      testing:
+        patterns:
+          - "vitest"
+          - "@playwright/*"
+          - "@lhci/*"
+          - "pa11y*"
+          - "@axe-core/*"
+        update-types:
+          - "minor"
+          - "patch"
+      lint-format:
+        patterns:
+          - "@biomejs/*"
+          - "prettier*"
+          - "eslint*"
+        update-types:
+          - "minor"
+          - "patch"
+      types:
+        patterns:
+          - "@types/*"
+        update-types:
+          - "minor"
+          - "patch"
+
+    # Mayors van en PRs individuales (cambios potencialmente breaking)
+    # No se agrupan — cada uno se revisa por separado.
+
+    ignore:
+      # Ignorar peers que ya gestionan otras tools
+      - dependency-name: "node"
+
+  # ─────────────────────────────────────────────────────────────
+  # GitHub Actions workflows (actions/checkout, etc.)
+  # ─────────────────────────────────────────────────────────────
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Europe/Madrid"
+    open-pull-requests-limit: 3
+    target-branch: "dev"
+    labels:
+      - "ci"
+      - "automated"
+    commit-message:
+      prefix: "chore(ci)"
+      include: "scope"
+
+  # ─────────────────────────────────────────────────────────────
+  # Composer (solo si el proyecto usa Composer — WordPress con Sage, plugins custom)
+  # Descomentar si aplica:
+  # ─────────────────────────────────────────────────────────────
+  # - package-ecosystem: "composer"
+  #   directory: "/"
+  #   schedule:
+  #     interval: "weekly"
+  #     day: "monday"
+  #     time: "06:00"
+  #     timezone: "Europe/Madrid"
+  #   open-pull-requests-limit: 3
+  #   target-branch: "dev"
+  #   labels:
+  #     - "deps"
+  #     - "php"
+  #     - "automated"
+  #   commit-message:
+  #     prefix: "chore(deps-php)"
+  #     include: "scope"
