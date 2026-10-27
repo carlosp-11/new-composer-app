@@ -6,8 +6,10 @@ Documento de seguimiento. Última actualización: 2026-05-08.
 
 ## 🔴 Acciones manuales pendientes (críticas)
 
-### R-01 — Rotar APP_KEY en producción
-La clave `base64:ZrpbqwELd3bKvk0+M8lLUnCOEOMiXEmLYnqIX1IMAFI=` quedó expuesta en el historial de git (commit `db4e0db` y siguientes). En este PR ya se eliminó del `render.yaml` (ahora `sync: false`).
+### R-01 — Rotar APP_KEY en producción ✅ hecho
+
+Comprobado el 2026-10-27: la `APP_KEY` de Render no coincide con ninguna de las que aparecen en el historial del repo.
+La clave anterior quedó expuesta en el historial de git (commit `db4e0db` y siguientes). En este PR ya se eliminó del `render.yaml` (ahora `sync: false`).
 
 **Pasos manuales obligatorios antes del deploy de este PR:**
 1. Entrar al panel de Render → Service `c-depot` → Environment.
