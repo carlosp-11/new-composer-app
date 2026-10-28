@@ -1,8 +1,7 @@
 name: CI
 
 on:
-  push:
-    branches: [main, 'work/**']
+  # Solo PRs a la rama de producción: minimiza minutos de Actions.
   pull_request:
     branches: [main]
 
